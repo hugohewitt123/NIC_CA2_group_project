@@ -1,8 +1,10 @@
-Online meeting on 26/11/2023
+Online meeting on 26/11/2023 at 1130
 
+-Introductions
 -Disscuss the problem
 -Understand what is needed
--Next meetings decided 
+-Create github and setup basic workspace
+-Next meetings decided:
   -Onling meeting 28/11/2023 at 1800
   -In person meeting Innovation Cafe at 1550 to 1600
 
