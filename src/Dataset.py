@@ -2,7 +2,7 @@
 
 class Dataset:
     def __init__(self):
-        self.dimension = -1 # Num of cities
+        self.dimension = -1  # Num of cities
         self.num_of_items = -1
         self.knapsack_cap = -1
         self.min_speed = -1

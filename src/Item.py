@@ -8,7 +8,8 @@ class Item:
             weight: weight
             node: assigned node number
     """
-    def __init__(self, profit, weight, node):
+    def __init__(self, index, profit, weight, node):
+        self.index = index
         self.profit = profit
         self.weight = weight
         self.assigned_node = node

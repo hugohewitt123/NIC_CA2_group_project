@@ -5,7 +5,8 @@ import Item
 folder_path = "../resources/"
 file_names = ["a280-n279", "a280-n1395", "a280-n2790",
               "fnl4461-n4460", "fnl4461-n22300", "fnl4461-n44600",
-              "pla33810-n33809", "pla33810-n169045", "pla33810-n338090"]
+              "pla33810-n33809", "pla33810-n169045", "pla33810-n338090",
+              "test-example-n4"]
 file_ext = ".txt"
 
 """
@@ -42,15 +43,17 @@ def file_reader(selected_file):
     # inx 0 not used in list
     dataset.items[0] = [None]
     for i in range(dataset.num_of_items):
+        index = int(lines[item_line_offset + i].split(splitter)[0])
         profit = float(lines[item_line_offset + i].split(splitter)[1])
         weight = float(lines[item_line_offset + i].split(splitter)[2])
         assigned_node = int(lines[item_line_offset + i].split(splitter)[3])
-        item = Item.Item(profit, weight, assigned_node)
+        item = Item.Item(index, profit, weight, assigned_node)
         node_items = dataset.items[assigned_node].copy()
         node_items.append(item)
         dataset.items[assigned_node] = node_items
 
     return dataset
+
 
 # Testing Section
 dataset = file_reader(1)
