@@ -1,6 +1,7 @@
 # File reader puts text files into python objects
 import Dataset
 import Item
+import Node
 
 folder_path = "../resources/"
 file_names = ["a280-n279", "a280-n1395", "a280-n2790",
@@ -35,6 +36,7 @@ def file_reader(selected_file):
     for i in range(dataset.dimension):
         node_x = float(lines[node_line_offset + i].split(splitter)[1])
         node_y = float(lines[node_line_offset + i].split(splitter)[2])
+        dataset.nodes.append(Node.Node(node_x, node_y, None))
         dataset.coord_x.append(node_x)
         dataset.coord_y.append(node_y)
 
@@ -51,6 +53,12 @@ def file_reader(selected_file):
         node_items = dataset.items[assigned_node].copy()
         node_items.append(item)
         dataset.items[assigned_node] = node_items
+        dataset.nodes[assigned_node].items.append(item)
+
+    for i in range(len(dataset.nodes)):
+        if i > 1:
+            node = dataset.nodes[i]
+            node.sort_item_profit_ratio()
 
     return dataset
 

@@ -14,6 +14,7 @@ def plot_distribution(file_name, dataset):
     plt.scatter(coords_x, coords_y, s=0.5)
     plt.show()
 
+
 # Testing Section
-ds = fu.file_reader(0)
+ds = fu.file_reader(1)
 plot_distribution(None, ds)

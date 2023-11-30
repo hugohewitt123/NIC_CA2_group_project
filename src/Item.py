@@ -13,3 +13,4 @@ class Item:
         self.profit = profit
         self.weight = weight
         self.assigned_node = node
+        self.profit_ratio = profit / weight

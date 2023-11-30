@@ -10,4 +10,5 @@ class Dataset:
         self.renting_ration = -1
         self.coord_x = []
         self.coord_y = []
+        self.nodes = [None]
         self.items = []
