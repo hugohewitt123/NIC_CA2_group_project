@@ -1,0 +1,25 @@
+In person meeting
+
+-Different approaches discussed
+-Implement NSGA-II?
+-Compare algorithms, research at least 2 others
+-write background of TTP
+-experiments to improve algorithm
+-produce the deliverables for the problem
+
+Task Deligation:
+Ahmed -> Intro and Traveling Thief problem description
+Daji, Priyanka, Yifeng  -> Comparison of other techniques (NSGA-II, ACO, greedy?, 
+Hugo, Lucas  -> Writing NSGA-II implementation (Hugo: Knapsac, Lucas: TSP)
+
+Name(TBC)  -> Experimentation on the algorthim, finding a local heuristic algorithm
+Name(TBC)  -> Produce the deliverables for the problem (as on the competition page)
+
+
+Name of attendees:
+Hugo Hewitt
+King Lok Lam
+Yifeng Wang
+Daji Liang
+Ahmed
+Priyanka Naithani
