@@ -84,11 +84,6 @@ def cal_dist(node_a: Node, node_b: Node):
 
 
 # Testing Section
-
-node_1 = Node.Node(10, 10, 1, [])
-node_2 = Node.Node(20, 20, 2, [])
-print(cal_dist(node_1, node_2))
-
 dataset: Dataset = file_util.file_reader(0)
 test_path = get_random_path(dataset)
 test_path_dist = get_path_dist(test_path)
