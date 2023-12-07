@@ -3,7 +3,7 @@ import Dataset
 import Item
 import Node
 
-folder_path = "../resources/"
+folder_path = "./resources/"
 file_names = ["a280-n279", "a280-n1395", "a280-n2790",
               "fnl4461-n4460", "fnl4461-n22300", "fnl4461-n44600",
               "pla33810-n33809", "pla33810-n169045", "pla33810-n338090",
@@ -22,11 +22,11 @@ def file_reader(selected_file):
     with open(full_path, mode='r') as f:
         lines = f.read().splitlines()
     dataset = Dataset.Dataset()
-    dataset.dimension = int(lines[2].split(splitter)[1])
-    dataset.num_of_items = int(lines[3].split(splitter)[1])
-    dataset.knapsack_cap = float(lines[4].split(splitter)[1])
-    dataset.min_speed = float(lines[5].split(splitter)[1])
-    dataset.max_speed = float(lines[6].split(splitter)[1])
+    dataset.dimension      = int(lines[2].split(splitter)[1])
+    dataset.num_of_items   = int(lines[3].split(splitter)[1])
+    dataset.knapsack_cap   = float(lines[4].split(splitter)[1])
+    dataset.min_speed      = float(lines[5].split(splitter)[1])
+    dataset.max_speed      = float(lines[6].split(splitter)[1])
     dataset.renting_ration = float(lines[7].split(splitter)[1])
 
     # idx 0 not used in list
@@ -41,18 +41,19 @@ def file_reader(selected_file):
         dataset.coord_y.append(node_y)
 
     item_line_offset = node_line_offset + dataset.dimension + 1
-    dataset.items = [[]] * (dataset.dimension + 1)
+    dataset.items = [None]#[[]] * (dataset.dimension + 1)
     # inx 0 not used in list
-    dataset.items[0] = [None]
+    #dataset.items[0] = [None]
     for i in range(dataset.num_of_items):
-        index = int(lines[item_line_offset + i].split(splitter)[0])
+        index  = int(lines[item_line_offset + i].split(splitter)[0])
         profit = float(lines[item_line_offset + i].split(splitter)[1])
         weight = float(lines[item_line_offset + i].split(splitter)[2])
         assigned_node = int(lines[item_line_offset + i].split(splitter)[3])
         item = Item.Item(index, profit, weight, assigned_node)
-        node_items = dataset.items[assigned_node].copy()
-        node_items.append(item)
-        dataset.items[assigned_node] = node_items
+        dataset.items.append(item)
+        #node_items = dataset.items[assigned_node].copy()
+        #node_items.append(item)
+        #dataset.items[assigned_node] = node_items
         dataset.nodes[assigned_node].items.append(item)
 
     for i in range(len(dataset.nodes)):
@@ -64,5 +65,5 @@ def file_reader(selected_file):
 
 
 # Testing Section
-dataset = file_reader(1)
-print("Test Finished")
+#dataset = file_reader(1)
+#print("Test Finished")
