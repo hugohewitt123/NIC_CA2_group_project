@@ -1,9 +1,10 @@
 # Node object for nodes section
 
 class Node:
-    def __init__(self, coord_x, coord_y, items):
-        self.coord_x = coord_x
-        self.coord_y = coord_y
+    def __init__(self, coord_x, coord_y, node_id, items):
+        self.node_id: int = node_id
+        self.coord_x: float = coord_x
+        self.coord_y: float = coord_y
         if items is None:
             self.items = []
         elif len(items) == 0:
