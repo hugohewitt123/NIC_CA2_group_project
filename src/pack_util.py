@@ -156,5 +156,6 @@ def knapsac(ds):
     #v = v(weight, knapsack_cap) #for velocity at a given point
     #t = d/v #for working out the time between nodes
 
+#Some testing
 ds = fu.file_reader(0)
 knapsac(ds)
