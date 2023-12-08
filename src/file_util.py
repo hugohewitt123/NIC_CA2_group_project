@@ -34,9 +34,10 @@ def file_reader(selected_file):
     dataset.coord_y.append(None)
     node_line_offset = 10
     for i in range(dataset.dimension):
+        node_id = int(lines[node_line_offset + i].split(splitter)[0])
         node_x = float(lines[node_line_offset + i].split(splitter)[1])
         node_y = float(lines[node_line_offset + i].split(splitter)[2])
-        dataset.nodes.append(Node.Node(node_x, node_y, None))
+        dataset.nodes.append(Node.Node(node_x, node_y, node_id, None))
         dataset.coord_x.append(node_x)
         dataset.coord_y.append(node_y)
 
@@ -63,7 +64,7 @@ def file_reader(selected_file):
 
     return dataset
 
-
 # Testing Section
-#dataset = file_reader(1)
-#print("Test Finished")
+dataset = file_reader(0)
+print("Test Finished")
+

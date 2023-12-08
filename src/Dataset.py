@@ -1,3 +1,4 @@
+import Node
 # Params, Nodes and Items of the problem
 
 class Dataset:
@@ -10,5 +11,5 @@ class Dataset:
         self.renting_ration = -1
         self.coord_x = []
         self.coord_y = []
-        self.nodes = [None]
+        self.nodes: Node = [None]
         self.items = []
