@@ -1,6 +1,5 @@
 import Dataset
 import Node
-import file_util
 import math
 import datetime
 import random
@@ -32,7 +31,7 @@ def get_dist_matrix(ds: Dataset):
 
 """
     function: get_random_path
-    description: generate a random path of initialization
+    description: generate a random path for initialization
     params:
         ds (Dataset): The Dataset
     return:
@@ -83,8 +82,3 @@ def cal_dist(node_a: Node, node_b: Node):
     return round(dist, 3)
 
 
-# Testing Section
-dataset: Dataset = file_util.file_reader(0)
-test_path = get_random_path(dataset)
-test_path_dist = get_path_dist(test_path)
-# get_dist_matrix(dataset) # DONT PUT LARGEST DATASET
