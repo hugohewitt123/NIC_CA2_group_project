@@ -102,7 +102,10 @@ def cut_three_consecutive_path(route: Route, node: Node):
     path = route.path.copy()
     # path = [0,1,2,3,4,5,6,7,8]
     path_len = len(path)
-    idx = path.index(node)
+    if node in path:
+        idx = path.index(node)
+    else:
+        print("pause")
     # idx = 4
     path_sections = [None] * 3
     path_sections[0] = get_section(path, idx % path_len, idx+2 % path_len)
