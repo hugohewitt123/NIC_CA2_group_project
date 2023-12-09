@@ -4,7 +4,8 @@ import three_opt
 import plotter
 import Node
 import Dataset
-import random
+import Route
+import datetime
 
 
 """
@@ -16,17 +17,25 @@ import random
     return:
         n_path: new optimised path
 """
-def random_three_opt(path: list, evaluations: int):
-    n_path: list = path.copy()
+def random_three_opt(ds: Dataset, route: Route, evaluations: int):
+    n_path: list = route.path.copy()
     for i in range(evaluations):
         if i % 500 == 0 or i == evaluations-1:
-            dist = pu.get_path_dist(n_path)
+            dist = pu.get_path_dist(route.path)
             print(f"evaluations: {i} dist: {dist}")
-        three_sections: list = three_opt.cut_three_path(n_path)
-        n_path = three_opt.three_opt_swap(three_sections[0], three_sections[1], three_sections[2])
+        three_sections, route = three_opt.cut_three_rand_path(route, ds)
+        route.path = three_opt.three_opt_swap(three_sections[0], three_sections[1], three_sections[2])
 
     print("random_three_opt done")
-    return n_path
+    return route.path, route
+
+
+def local_three_opt(ds: Dataset, route: Route):
+    n_path: list = route.path.copy()
+    nodes: list = ds.nodes.copy()
+    for i in range(len(nodes)):
+        node = nodes[i]
+        three_opt.cut_three_consecutive_path(route, node)
 
 
 # Test Section
@@ -41,25 +50,35 @@ def test1():
     original_path = [node_1, node_2, node_3, node_4, node_5, node_6]
 
     t_ds = Dataset.Dataset()
-    t_ds.nodes = original_path
+    t_ds.nodes = original_path.copy()
     t_random_path = pu.get_random_path(t_ds)
     path_dist = pu.get_path_dist(t_random_path)
     print("old path dist", path_dist)
 
-    t_random_path = random_three_opt(t_random_path, 5)
+    t_random_path = random_three_opt(t_ds, t_random_path, 40)
     path_dist = pu.get_path_dist(t_random_path)
     print("new path dist", path_dist)
 
 
 def test2():
-    ds: Dataset = fu.file_reader(0)
+    ct = datetime.datetime.now()
+    print("start current time:-", ct)
+
+    ds: Dataset = fu.file_reader(3)
     random_path = pu.get_random_path(ds)
     path_dist = pu.get_path_dist(random_path)
     print("old path dist", path_dist)
 
-    random_path = random_three_opt(random_path, 10000)
+    # Note: A normal 3-opt would take (n k) = n!/(k!(n-k)!) tries
+    # This version will only take "n" evaluation rounds defined by user
+
+    route = Route.Route(random_path, [], 10000)
+    random_path, route = random_three_opt(ds, route, 10000)
     path_dist = pu.get_path_dist(random_path)
     print("new path dist", path_dist)
+
+    ct = datetime.datetime.now()
+    print("end current time:-", ct)
 
 
 # test1()
