@@ -38,9 +38,18 @@ def get_dist_matrix(ds: Dataset):
         The path in the form of List (Node)
 """
 def get_random_path(ds: Dataset):
-    nodes = ds.nodes[1:]
+    length = 0
+    if ds.nodes[0] is None:
+        # From Real Dataset
+        nodes = ds.nodes[1:]
+        length = len(ds.nodes)-1
+    else:
+        # From Test Nodes
+        nodes = ds.nodes
+        length = len(ds.nodes)
+
     path: Node = []
-    for i in range(len(ds.nodes)-1):
+    for i in range(length):
         rand_num = random.randint(0, len(nodes)-1)
         path.append(nodes[rand_num])
         del nodes[rand_num]
@@ -82,3 +91,10 @@ def cal_dist(node_a: Node, node_b: Node):
     return round(dist, 3)
 
 
+def print_path_order(path: list):
+    for node in path:
+        if isinstance(node, Node.Node):
+            print(node.node_id, end="")
+        else:
+            print(node, end="")
+    print("\n")
