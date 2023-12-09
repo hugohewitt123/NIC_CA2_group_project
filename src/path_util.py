@@ -45,6 +45,8 @@ def get_random_path(ds: Dataset):
         rand_num = random.randint(0, len(nodes)-1)
         path.append(nodes[rand_num])
         del nodes[rand_num]
+    #to include the 1st path, making it a cycle
+    path.append(path[0])
     return path
 
 

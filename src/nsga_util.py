@@ -44,6 +44,32 @@ def generate_path_population(ds, population_size):
         path_dists.append(path.get_path_dist(init_path))
     return path_pop, path_dists
 
+def evaluate_population(pack_pop, path_pop, ds, Vmax, Vmin, cap):
+    '''function to work out the time for the population given weights'''
+    time_list = []
+    for n in range(len(pack_pop)):
+        nodes  = []
+        weights = []
+        for i in range(len(pack_pop[n])):
+            if pack_pop[n][i] == 1:
+                nodes.append(ds.items[i+1].assigned_node)
+                weights.append(ds.items[i+1].weight)
+        w = 0
+        t = 0
+        v = Vmax
+        for i in range(len(path_pop[n])-1):
+            if path_pop[n][i] in nodes:
+                w += weights[nodes.index(node)]
+                v = Vmax - ((Vmax-Vmin)/cap)*w
+                d = path.cal_dist(path_pop[n][i], path_pop[n][i+1])
+                t += d/v
+            else:
+                d = path.cal_dist(path_pop[n][i], path_pop[n][i+1])
+                t += d/v
+        time_list.append(t)
+    return(time_list)
+
+
 def run_nsga(ds):
     '''function to run the nsga algorithm'''
     '''Parameters'''
@@ -67,6 +93,8 @@ def run_nsga(ds):
 
     '''creating the path population and evaluating distances'''
     path_pop, path_dists = generate_path_population(ds, population_size)
+
+    times = evaluate_population(pack_pop, path_pop, ds, Vmax, Vmin, knapsack_cap)
 
     ## Start of the NSGA-II part ##
     Rt = pack_pop + pack_children
