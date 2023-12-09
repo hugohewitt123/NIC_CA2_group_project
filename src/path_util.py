@@ -84,7 +84,7 @@ def cal_dist(node_a: Node, node_b: Node):
 
 
 # Testing Section
-dataset: Dataset = file_util.file_reader(0)
-test_path = get_random_path(dataset)
-test_path_dist = get_path_dist(test_path)
+#dataset: Dataset = file_util.file_reader(0)
+#test_path = get_random_path(dataset)
+#test_path_dist = get_path_dist(test_path)
 # get_dist_matrix(dataset) # DONT PUT LARGEST DATASET

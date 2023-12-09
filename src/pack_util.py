@@ -157,5 +157,5 @@ def knapsac(ds):
     #t = d/v #for working out the time between nodes
 
 #Some testing
-ds = fu.file_reader(0)
-knapsac(ds)
+#ds = fu.file_reader(0)
+#knapsac(ds)
