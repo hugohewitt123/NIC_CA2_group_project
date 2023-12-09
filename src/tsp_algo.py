@@ -33,9 +33,14 @@ def random_three_opt(ds: Dataset, route: Route, evaluations: int):
 def local_three_opt(ds: Dataset, route: Route):
     n_path: list = route.path.copy()
     nodes: list = ds.nodes.copy()
+    nodes = nodes[1:]
     for i in range(len(nodes)):
+        if i % 100 == 0:
+            print(f"idx: {i}")
         node = nodes[i]
-        three_opt.cut_three_consecutive_path(route, node)
+        three_sections = three_opt.cut_three_consecutive_path(route, node)
+        route.path = three_opt.three_opt_swap(three_sections[0], three_sections[1], three_sections[2])
+    return route.path, route
 
 
 # Test Section
@@ -73,7 +78,8 @@ def test2():
     # This version will only take "n" evaluation rounds defined by user
 
     route = Route.Route(random_path, [], 10000)
-    random_path, route = random_three_opt(ds, route, 10000)
+    random_path, route = local_three_opt(ds, route)
+    # random_path, route = random_three_opt(ds, route, 10000)
     path_dist = pu.get_path_dist(random_path)
     print("new path dist", path_dist)
 
