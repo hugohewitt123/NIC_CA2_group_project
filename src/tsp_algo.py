@@ -2,7 +2,7 @@ import file_util as fu
 import path_util as pu
 import three_opt
 import plotter
-from src import Params
+import Params
 import TSP_Data
 import Node
 import Dataset

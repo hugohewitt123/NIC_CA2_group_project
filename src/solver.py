@@ -1,7 +1,7 @@
 import Params
 import tsp_algo
 import file_util as fu
-from src import TSP_Data
+import TSP_Data
 
 the_param: Params = fu.read_param_properties()
 tsp_graph_data = TSP_Data.TSP_Data()
