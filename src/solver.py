@@ -4,6 +4,7 @@ import file_util as fu
 import TSP_Data
 import nsga_util
 
+# The main program
 the_param: Params = fu.read_param_properties()
 tsp_graph_data = TSP_Data.TSP_Data()
 tsp_population, tsp_graph_data = tsp_algo.tsp_solve(the_param.dataset_idx, the_param)

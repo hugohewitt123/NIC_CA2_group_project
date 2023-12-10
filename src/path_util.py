@@ -6,6 +6,14 @@ import random
 
 
 # WARNING!!! DO NOT RUN THIS FUNCTION IN THE LARGEST DATA SET
+"""
+    function: get_dist_matrix
+    description: get distance between every nodes
+    params:
+        ds (Dataset): the dataset
+    return:
+        dist_matrix: Distance matrix in from of 2D array. Each node correspond to the node Id
+"""
 def get_dist_matrix(ds: Dataset):
     print(datetime.datetime.now(), "get matrix")
     dimension: int = 0
