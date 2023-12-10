@@ -54,6 +54,7 @@ def compare(i, j):
     #3: rank
     #4: path population
     #5: packing population
+    #6: weights
     if (i[3] < j[3]) or ((i[3] == j[3]) and (i[2] > j[2])):
         return -1
     elif (i[3] > j[3]) or ((i[3] == j[3]) and (i[2] < j[2])):
@@ -61,15 +62,19 @@ def compare(i, j):
     else:
         return 0
 
-def make_new_pack_pop(population, profits, weights, tournament_size, knapsack_cap):
+def make_new_pack_pop(population, profits, weights, tournament_size, knapsack_cap, ds):
     '''function to run tournament selection, cross over and mutation for packing population'''
     new_pop = []
     while len(new_pop) < len(population):
         a, b = pack.tournament_selection(population, profits, weights, tournament_size, knapsack_cap)
         c, d = pack.single_point_crossover(a, b)
         e, f = pack.bitflip_mutation(c, d)
-        new_pop.append(e)
-        new_pop.append(f)
+        pe, we = pack.evaluate_pack(e, ds)
+        pf, wf = pack.evaluate_pack(f, ds)
+        #for ensuring the capacity of the knapsack is not exceeded
+        if we <= knapsack_cap and wf <= knapsack_cap:
+            new_pop.append(e)
+            new_pop.append(f)
     return new_pop
 
 def generate_path_population(ds, population_size):
@@ -164,11 +169,11 @@ def mutate_path(c, d):
 def run_nsga(ds):
     '''function to run the nsga algorithm'''
     '''Parameters'''
-    population_size = 10
-    tournament_size = 4
+    population_size = 20
+    tournament_size = 10
     num_generations = 100
     #fill rate is the percentage of knapsack to fill to max capacity
-    fill_rate       = 0.5
+    fill_rate       = 1
     '''problem constraints'''
     Vmin         = ds.min_speed
     Vmax         = ds.max_speed
@@ -188,7 +193,7 @@ def run_nsga(ds):
         for i in path_pop:
             path_dists.append(path.get_path_dist(i))
         
-        pack_children = make_new_pack_pop(pack_pop, profits, weights, tournament_size, knapsack_cap)
+        pack_children = make_new_pack_pop(pack_pop, profits, weights, tournament_size, knapsack_cap, ds)
         pack_pop = pack_pop + pack_children
 
     ### TODO This is where 3-opt will go ### below is just temporary 
@@ -210,7 +215,7 @@ def run_nsga(ds):
         #sorting the population into non-dominating ranks
         ranks = [-1] * len(times)
         distances = [0] * len(times)
-        population = list(zip(profits, weights, distances, ranks, path_pop, pack_pop))
+        population = list(zip(times, profits, distances, ranks, path_pop, pack_pop, weights))
         for i in range(len(population)):
             population[i] = list(population[i])
 
@@ -233,6 +238,7 @@ def run_nsga(ds):
         #3: rank
         #4: path population
         #5: packing population
+        #6: weights
         #print(population)
 
         population = sorted(population, key=cmp_to_key(compare), reverse=False)
@@ -245,7 +251,7 @@ def run_nsga(ds):
 
     print("\n")
     for p in population:
-        print(p[:4])
+        print(p[:2])
 
 ds = fu.file_reader(0)
 run_nsga(ds)
