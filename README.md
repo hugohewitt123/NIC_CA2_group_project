@@ -5,15 +5,15 @@ Link to the GitHub problem page:
 https://github.com/blankjul/gecco19-thief/tree/master
 
 How to run:
-Please run "solver.py"
+Please run "solver.py" in folder "src"
 
 Change the param in resource/param_properties
-Params:
-name (Type): Description
-population_size_nsg (int): Population size
-evaluations_tsp (int): Rounds of fitness in TSP
-run_local_tsp (bool): Optimise every node in TSP
-tournament_size_ksp (int): Tournament size for fitness test in KSP
-num_generations_ksp (int): Rounds of fitness in KSP
-fill_rate_ksp (float): Percentage of the knapsack to fill
-dataset_idx (int): Which file reading
+</br> Params:
+</br> name (Type): Description
+</br> population_size_nsg (int): Population size
+</br> evaluations_tsp (int): Rounds of fitness in TSP
+</br> run_local_tsp (bool): Optimise every node in TSP
+</br> tournament_size_ksp (int): Tournament size for fitness test in KSP
+</br> num_generations_ksp (int): Rounds of fitness in KSP
+</br> fill_rate_ksp (float): Percentage of the knapsack to fill
+</br> dataset_idx (int): Which file reading
