@@ -8,6 +8,7 @@ from functools import cmp_to_key
 import file_util as fu
 import pack_util as pack
 import path_util as path
+import Params
 
 #TODO re-write this:
 def non_dom_sort(P):
@@ -144,9 +145,9 @@ def generate_path_children(path_pop, path_dists, tournament_size):
     children = []
     for i in range(int(len(path_pop)/2)):
         a, b = path_tournament_selection(path_pop, path_dists, tournament_size)
-        c, d = mutate_path(a, b)
-        children.append(c)
-        children.append(d)
+        #c, d = mutate_path(a, b)
+        children.append(a)
+        children.append(b)
     return children
 
 #temporary replacement for 3-opt
@@ -166,14 +167,14 @@ def mutate_path(c, d):
     d[randchoiceb[0]:randchoiceb[1]] = d[randchoiceb[0]:randchoiceb[1]][::-1]
     return c, d
 
-def run_nsga(ds):
+def run_nsga(ds, path_population, the_param):
     '''function to run the nsga algorithm'''
     '''Parameters'''
-    population_size = 20
-    tournament_size = 10
-    num_generations = 100
+    population_size = the_param.population_size_nsg
+    tournament_size = the_param.tournament_size_ksp
+    num_generations = the_param.num_generations_ksp
     #fill rate is the percentage of knapsack to fill to max capacity
-    fill_rate       = 1
+    fill_rate       = the_param.fill_rate_ksp
     '''problem constraints'''
     Vmin         = ds.min_speed
     Vmax         = ds.max_speed
@@ -183,7 +184,10 @@ def run_nsga(ds):
     '''creating the packing population and initial children'''
     pack_pop = pack.generate_random_population(population_size, num_of_items, ds, knapsack_cap, fill_rate)
     '''creating the path population and evaluating distances'''
-    path_pop, path_dists = generate_path_population(ds, population_size)
+    path_pop = path_population#generate_path_population(ds, population_size)
+    path_dists = []
+    for i in path_pop:
+        path_dists.append(path.get_path_dist(i))
 
     for x in range(num_generations):
         '''creating the children for the paths and packs'''
@@ -248,10 +252,10 @@ def run_nsga(ds):
         for i in population:
             pack_pop.append(i[5])
             path_pop.append(i[4])
+    return population
+    #print("\n")
+    #for p in population:
+    #    print(p[:2])
 
-    print("\n")
-    for p in population:
-        print(p[:2])
-
-ds = fu.file_reader(0)
-run_nsga(ds)
+#ds = fu.file_reader(0)
+#run_nsga(ds)
