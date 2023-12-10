@@ -8,6 +8,7 @@ import file_util as fu
 import pack_util as pack
 import path_util as path
 
+#TODO re-write this:
 def non_dom_sort(P):
     '''function to run the non-dominating sort'''
     #0: time
@@ -17,7 +18,7 @@ def non_dom_sort(P):
     #4: path population
     #5: packing population
     P1 = [P[0]]
-    for p in P:
+    for p in P[1:]:
         P1.append(p)
         for q in P1:
             if p[0] < q[0] and p[1] > q[1]:
@@ -33,8 +34,8 @@ def density_est(I):
     '''function to run the density estimation and crowding operator'''
     for i in range(2):
         I = sorted(I, key=lambda x :x[i])
-        I[0][2] = I[len(f1)-1][2] = float('inf')
-        for j in range(len(f1)-1):
+        I[0][2] = I[len(I)-1][2] = float('inf')
+        for j in range(len(I)-1):
             I[j][2] += (I[j+1][i]-I[j-1][i])
     return I
 
@@ -166,9 +167,9 @@ def mutate_path(c, d):
 def run_nsga(ds):
     '''function to run the nsga algorithm'''
     '''Parameters'''
-    population_size = 100
+    population_size = 50
     tournament_size = 10
-    num_generations = 1000
+    num_generations = 100
     #fill rate is the percentage of knapsack to fill to max capacity
     fill_rate            = 0.1
     '''problem constraints'''
@@ -191,9 +192,12 @@ def run_nsga(ds):
             path_dists.append(path.get_path_dist(i))
         
         pack_children = make_new_pack_pop(pack_pop, profits, weights, tournament_size, knapsack_cap)
+        pack_pop = pack_pop + pack_children
+
+    ### TODO This is where 3-opt will go ### below is just temporary 
         path_children = generate_path_children(path_pop, path_dists, tournament_size)
         path_pop = path_pop + path_children
-        pack_pop = pack_pop + pack_children
+    ###
 
         times = evaluate_population(pack_pop, path_pop, ds, Vmax, Vmin, knapsack_cap)
         profits, weights = pack.get_profit_weights(pack_pop, ds)
@@ -209,11 +213,10 @@ def run_nsga(ds):
         #sorting the population into non-dominating ranks
         ranks = [-1] * len(times)
         distances = [0] * len(times)
-        population = list(zip(profits, weights, distances, ranks))#, path_pop, pack_pop))
+        population = list(zip(profits, weights, distances, ranks, path_pop, pack_pop))
         for i in range(len(population)):
             population[i] = list(population[i])
 
-#TODO not working :(
         rankiter = 0
         P0 = list(population)
         done = 0
@@ -237,13 +240,13 @@ def run_nsga(ds):
 
         population = crowded_comparison(population)
         population = population[:len(population)//2]
-        print(population)
         pack_pop = []
         path_pop = []
         for i in population:
             pack_pop.append(i[5])
             path_pop.append(i[4])
-
+    for p in population:
+        print(p[:3])
 
 ds = fu.file_reader(0)
 run_nsga(ds)
