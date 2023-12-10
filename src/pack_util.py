@@ -57,9 +57,9 @@ def single_point_crossover(a, b):
 
 def bitflip_mutation(c, d):
     '''function to perform bitflip mutation'''
-    i = random.randint(0,len(c))
+    i = random.randint(0,len(c)-1)
     c[i] = ~c[i]+2
-    i = random.randint(0,len(d))
+    i = random.randint(0,len(d)-1)
     d[i] = ~d[i]+2
     return c, d
 
@@ -157,5 +157,5 @@ def knapsac(ds):
     #t = d/v #for working out the time between nodes
 
 #Some testing
-ds = fu.file_reader(0)
-knapsac(ds)
+#ds = fu.file_reader(0)
+#knapsac(ds)

@@ -2,12 +2,15 @@
 import Dataset
 import Item
 import Node
+import Params
 
-folder_path = "./resources/"
+folder_path = "C:/Users/hugo/Documents/University/YEAR_4/ECMM409_Nature Inspired Computation/CA2/NIC_CA2_group_project-tsp_lucas/NIC_CA2_group_project-tsp_lucas/resources/"
+# folder_path = "C:/Users/Lucas/Documents/Academic/Exeter/ECMM409 Nature Inspired Computation/CA2/CA2PY/resources/"
 file_names = ["a280-n279", "a280-n1395", "a280-n2790",
               "fnl4461-n4460", "fnl4461-n22300", "fnl4461-n44600",
               "pla33810-n33809", "pla33810-n169045", "pla33810-n338090",
               "test-example-n4"]
+param_file = "param_properties"
 file_ext = ".txt"
 
 """
@@ -22,11 +25,11 @@ def file_reader(selected_file):
     with open(full_path, mode='r') as f:
         lines = f.read().splitlines()
     dataset = Dataset.Dataset()
-    dataset.dimension      = int(lines[2].split(splitter)[1])
-    dataset.num_of_items   = int(lines[3].split(splitter)[1])
-    dataset.knapsack_cap   = float(lines[4].split(splitter)[1])
-    dataset.min_speed      = float(lines[5].split(splitter)[1])
-    dataset.max_speed      = float(lines[6].split(splitter)[1])
+    dataset.dimension = int(lines[2].split(splitter)[1])
+    dataset.num_of_items = int(lines[3].split(splitter)[1])
+    dataset.knapsack_cap = float(lines[4].split(splitter)[1])
+    dataset.min_speed = float(lines[5].split(splitter)[1])
+    dataset.max_speed = float(lines[6].split(splitter)[1])
     dataset.renting_ration = float(lines[7].split(splitter)[1])
 
     # idx 0 not used in list
@@ -44,9 +47,9 @@ def file_reader(selected_file):
     item_line_offset = node_line_offset + dataset.dimension + 1
     dataset.items = [None]#[[]] * (dataset.dimension + 1)
     # inx 0 not used in list
-    #dataset.items[0] = [None]
+    dataset.items[0] = [None]
     for i in range(dataset.num_of_items):
-        index  = int(lines[item_line_offset + i].split(splitter)[0])
+        index = int(lines[item_line_offset + i].split(splitter)[0])
         profit = float(lines[item_line_offset + i].split(splitter)[1])
         weight = float(lines[item_line_offset + i].split(splitter)[2])
         assigned_node = int(lines[item_line_offset + i].split(splitter)[3])
@@ -64,7 +67,23 @@ def file_reader(selected_file):
 
     return dataset
 
-# Testing Section
-dataset = file_reader(0)
-print("Test Finished")
+def read_param_properties():
+    full_path = folder_path + param_file + file_ext
+    splitter = " "
+    print("Reading:" + full_path)
+    params = Params.Param()
+    with open(full_path, mode='r') as f:
+        lines = f.read().splitlines()
+    params.population_size_nsg = int(lines[0].split(splitter)[1])
+    params.evaluations_tsp = int(lines[1].split(splitter)[1])
+    params.run_local_tsp = bool(lines[2].split(splitter)[1])
+    params.tournament_size_ksp = int(lines[3].split(splitter)[1])
+    params.num_generations_ksp = int(lines[4].split(splitter)[1])
+    params.fill_rate_ksp = float(lines[5].split(splitter)[1])
 
+    params.dataset_idx = int(lines[-1].split(splitter)[1])  # Last Index
+
+    if params.population_size_nsg < params.tournament_size_ksp:
+        raise Exception("Tournament of KSP size should be smaller than population size")
+
+    return params

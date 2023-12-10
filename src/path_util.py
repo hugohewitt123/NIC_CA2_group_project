@@ -1,6 +1,5 @@
 import Dataset
 import Node
-import file_util
 import math
 import datetime
 import random
@@ -32,16 +31,26 @@ def get_dist_matrix(ds: Dataset):
 
 """
     function: get_random_path
-    description: generate a random path of initialization
+    description: generate a random path for initialization
     params:
         ds (Dataset): The Dataset
     return:
         The path in the form of List (Node)
 """
 def get_random_path(ds: Dataset):
-    nodes = ds.nodes[1:]
+    length = 0
+    nodes_pool = ds.nodes.copy()
+    if nodes_pool[0] is None:
+        # From Real Dataset
+        nodes = nodes_pool[1:]
+        length = len(nodes_pool)-1
+    else:
+        # From Test Nodes
+        nodes = nodes_pool
+        length = len(nodes_pool)
+
     path: Node = []
-    for i in range(len(ds.nodes)-1):
+    for i in range(length):
         rand_num = random.randint(0, len(nodes)-1)
         path.append(nodes[rand_num])
         del nodes[rand_num]
@@ -83,8 +92,29 @@ def cal_dist(node_a: Node, node_b: Node):
     return round(dist, 3)
 
 
-# Testing Section
-dataset: Dataset = file_util.file_reader(0)
-test_path = get_random_path(dataset)
-test_path_dist = get_path_dist(test_path)
-# get_dist_matrix(dataset) # DONT PUT LARGEST DATASET
+"""
+    function: print_path_order
+    description: print node number in a node list
+    params:
+        path (Node list): the node list
+"""
+def print_path_order(path: list):
+    for node in path:
+        if isinstance(node, Node.Node):
+            print(node.node_id, end=" ")
+        else:
+            print(node, end=" ")
+    print("")
+
+
+"""
+    function: node_to_node_index
+    description: from node to node index number list
+    params:
+        indexes: the node index number list
+"""
+def node_to_node_index(path: list):
+    indexes = []
+    for node in path:
+        indexes.append(node.node_id)
+    return indexes
