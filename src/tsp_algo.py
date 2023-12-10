@@ -3,6 +3,7 @@ import path_util as pu
 import three_opt
 import plotter
 from src import Params
+import TSP_Data
 import Node
 import Dataset
 import Route
@@ -19,20 +20,27 @@ import datetime
 """
 
 
-def random_three_opt(ds: Dataset, route: Route, evaluations: int):
+def random_three_opt(ds: Dataset, route: Route, evaluations: int, graph_data: TSP_Data):
     n_path: list = route.path.copy()
     print("evaluations, dist")
+
+    start_path_dist = pu.get_path_dist(n_path)
+    print(0, start_path_dist)
+    graph_data.add_data(0, start_path_dist)
+
     for i in range(evaluations):
         three_sections, route = three_opt.cut_three_rand_path(route, ds)
         route.path, p_dist = three_opt.three_opt_swap(three_sections[0].copy(), three_sections[1].copy(),
                                                       three_sections[2].copy())
-        if i % 500 == 0 or i == evaluations - 1:
+        if (i % 100 == 0 or i == evaluations - 1) and i != 0:
             print(f"{i}, {p_dist}")
+            graph_data.add_data(i, p_dist)
+
     print("random_three_opt done")
     return route.path, route
 
 
-def local_three_opt(ds: Dataset, route: Route):
+def local_three_opt(ds: Dataset, route: Route, evaluations: int, graph_data: TSP_Data):
     n_path: list = route.path.copy()
     nodes: list = ds.nodes.copy()
     nodes = nodes[1:]
@@ -41,10 +49,49 @@ def local_three_opt(ds: Dataset, route: Route):
         node = nodes[i]
         three_sections = three_opt.cut_three_consecutive_path(route, node)
         route.path, p_dist = three_opt.three_opt_swap(three_sections[0], three_sections[1], three_sections[2])
-        if i % 1000 == 0 or i == (len(nodes) - 1):
-            print(f"{i},{p_dist}")
+
+        if i % 100 == 0 or i == (len(nodes) - 1):
+            print(f"{i+evaluations},{p_dist}")
+            graph_data.add_data((i+evaluations), p_dist)
+
     print("local_three_opt done")
     return route.path, route
+
+
+def tsp_solve(file_idx: int, param: Params):
+    ct = datetime.datetime.now()
+    print("tsp start time:-", ct)
+
+    path_population = []
+    tsp_graph_data = TSP_Data.TSP_Data()
+
+    ds: Dataset = fu.file_reader(file_idx)
+    for i in range(param.population_size_nsg):
+        random_path = pu.get_random_path(ds)
+
+        # Note: A normal 3-opt would take (n k) = n!/(k!(n-k)!) tries
+        # This version will only take "n" evaluation rounds defined by user
+
+        evaluations = param.evaluations_tsp
+
+        route = Route.Route(random_path, [], evaluations)
+
+        # Random 3-opt
+        random_path, route = random_three_opt(ds, route, evaluations, tsp_graph_data)
+
+        # Local 3-opt, goes through all the nodes
+        if param.run_local_tsp:
+            random_path, route = local_three_opt(ds, route, evaluations, tsp_graph_data)
+
+        path_population.append(random_path)
+
+        path_dist = pu.get_path_dist(random_path)
+        print("end", path_dist, "\n")
+
+    ct = datetime.datetime.now()
+    print("tsp end time:-", ct)
+
+    return path_population, tsp_graph_data
 
 
 # Test Section
@@ -58,55 +105,15 @@ def test1():
 
     original_path = [node_1, node_2, node_3, node_4, node_5, node_6]
 
+    evaluations = 10
     t_ds = Dataset.Dataset()
     t_ds.nodes = original_path.copy()
     t_random_path = pu.get_random_path(t_ds)
+    route = Route.Route(t_random_path, [], evaluations)
+
     path_dist = pu.get_path_dist(t_random_path)
     print("old path dist", path_dist)
 
-    t_random_path = random_three_opt(t_ds, t_random_path, 40)
+    t_random_path, route = random_three_opt(t_ds, t_random_path, evaluations)
     path_dist = pu.get_path_dist(t_random_path)
     print("new path dist", path_dist)
-
-
-def tsp_solve(file_idx: int, param: Params):
-    ct = datetime.datetime.now()
-    print("tsp start time:-", ct)
-
-    path_population = []
-
-    ds: Dataset = fu.file_reader(file_idx)
-    for i in range(param.population_tsp):
-        random_path = pu.get_random_path(ds)
-        path_dist = pu.get_path_dist(random_path)
-        print(f"sample {i} starting path dist {path_dist}")
-
-        # Note: A normal 3-opt would take (n k) = n!/(k!(n-k)!) tries
-        # This version will only take "n" evaluation rounds defined by user
-
-        evaluations = param.evaluations_tsp
-
-        route = Route.Route(random_path, [], evaluations)
-
-        # Random 3-opt
-        random_path, route = random_three_opt(ds, route, evaluations)
-
-        # Local 3-opt, goes through all the nodes
-        if param.run_local_tsp:
-            random_path, route = local_three_opt(ds, route)
-
-        path_population.append(random_path)
-
-        path_dist = pu.get_path_dist(random_path)
-        print("ending path dist", path_dist)
-
-    ct = datetime.datetime.now()
-    print("tsp end time:-", ct)
-
-    return path_population
-
-
-# test1()
-the_param: Params = fu.read_param_properties()
-tsp_pop = tsp_solve(0, the_param)
-print("Done")

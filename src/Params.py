@@ -6,4 +6,4 @@ class Param:
         self.tournament_size_ksp: int = 2
         self.num_generations_ksp: int = 100
         self.fill_rate_ksp: float = 0.5
-
+        self.dataset_idx: int = 0
