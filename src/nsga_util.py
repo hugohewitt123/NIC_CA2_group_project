@@ -188,7 +188,7 @@ def run_nsga(ds, path_population, the_param):
     path_dists = []
     for i in path_pop:
         path_dists.append(path.get_path_dist(i))
-
+    record = []
     for x in range(num_generations):
         '''creating the children for the paths and packs'''
         print("Generation : ", x+1, end='\r')
@@ -196,24 +196,15 @@ def run_nsga(ds, path_population, the_param):
         path_dists = []
         for i in path_pop:
             path_dists.append(path.get_path_dist(i))
-        
+        #generate the pck children
         pack_children = make_new_pack_pop(pack_pop, profits, weights, tournament_size, knapsack_cap, ds)
         pack_pop = pack_pop + pack_children
-
-    ### TODO This is where 3-opt will go ### below is just temporary 
+        #generate the path children
         path_children = generate_path_children(path_pop, path_dists, tournament_size)
         path_pop = path_pop + path_children
-    ###
 
         times = evaluate_population(pack_pop, path_pop, ds, Vmax, Vmin, knapsack_cap)
         profits, weights = pack.get_profit_weights(pack_pop, ds)
-        #for i in range(len(weights)):
-        #    while weights[i] > knapsack_cap:
-        #        for j in range(len(pack_pop[i])):
-        #            if pack_pop[i][j] == 1:
-        #                pack_pop[i][j] = 0
-        #                break
-        #        profits, weights = pack.get_profit_weights(pack_pop, ds)
 
         ## Start of the NSGA-II part ##
         #sorting the population into non-dominating ranks
@@ -252,7 +243,9 @@ def run_nsga(ds, path_population, the_param):
         for i in population:
             pack_pop.append(i[5])
             path_pop.append(i[4])
-    return population
+        if x % 50:
+            record.append(population)
+    return population, record
     #print("\n")
     #for p in population:
     #    print(p[:2])
