@@ -63,7 +63,7 @@ def bitflip_mutation(c, d):
     d[i] = ~d[i]+2
     return c, d
 
-def generate_random_population(population_size, num_of_items, ds, knapsack_cap,fill_rate):
+def generate_random_population(population_size, num_of_items, ds, knapsack_cap, fill_rate):
     '''function to generate initial population'''
     population = []
     for i in range(population_size):

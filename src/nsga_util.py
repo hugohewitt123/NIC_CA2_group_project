@@ -37,10 +37,10 @@ def density_est(I):
         I = sorted(I, key=lambda x :x[i])
         I[0][2] = I[len(I)-1][2] = float('inf')
         for j in range(len(I)-1):
-            I[j][2] += (I[j+1][i]-I[j-1][i])
+            I[j][2] = I[j][2] + (I[j+1][i]-I[j-1][i])
     return I
 
-def compare(item1, item2):
+def compare(i, j):
     '''function to comare population items'''
     #1. Non-domination rank (i_rank)
     #2. Local crowding distance (i_distance)
@@ -54,9 +54,9 @@ def compare(item1, item2):
     #3: rank
     #4: path population
     #5: packing population
-    if (item1[3] < item2[3]) or ((item1[3] == item2[3]) and (item1[2] > item2[2])):
+    if (i[3] < j[3]) or ((i[3] == j[3]) and (i[2] > j[2])):
         return -1
-    elif (item1[3] > item2[3]) or ((item1[3] == item2[3]) and (item1[2] < item2[2])):
+    elif (i[3] > j[3]) or ((i[3] == j[3]) and (i[2] < j[2])):
         return 1
     else:
         return 0
@@ -144,7 +144,7 @@ def generate_path_children(path_pop, path_dists, tournament_size):
         children.append(d)
     return children
 
-
+#temporary replacement for 3-opt
 def mutate_path(c, d):
     '''funciton to mutate the paths'''
     visited = []
@@ -164,11 +164,11 @@ def mutate_path(c, d):
 def run_nsga(ds):
     '''function to run the nsga algorithm'''
     '''Parameters'''
-    population_size = 50
-    tournament_size = 10
-    num_generations = 200
+    population_size = 10
+    tournament_size = 4
+    num_generations = 100
     #fill rate is the percentage of knapsack to fill to max capacity
-    fill_rate            = 0.9
+    fill_rate       = 0.5
     '''problem constraints'''
     Vmin         = ds.min_speed
     Vmax         = ds.max_speed
@@ -235,7 +235,7 @@ def run_nsga(ds):
         #5: packing population
         #print(population)
 
-        population = sorted(population, key=cmp_to_key(compare))
+        population = sorted(population, key=cmp_to_key(compare), reverse=False)
         population = population[:len(population)//2]
         pack_pop = []
         path_pop = []
@@ -243,7 +243,7 @@ def run_nsga(ds):
             pack_pop.append(i[5])
             path_pop.append(i[4])
 
-    
+    print("\n")
     for p in population:
         print(p[:4])
 
