@@ -19,13 +19,12 @@ import datetime
 """
 def random_three_opt(ds: Dataset, route: Route, evaluations: int):
     n_path: list = route.path.copy()
+    print("evaluations, dist")
     for i in range(evaluations):
-        if i % 500 == 0 or i == evaluations-1:
-            dist = pu.get_path_dist(route.path)
-            print(f"evaluations: {i} dist: {dist}")
         three_sections, route = three_opt.cut_three_rand_path(route, ds)
-        route.path = three_opt.three_opt_swap(three_sections[0], three_sections[1], three_sections[2])
-
+        route.path, p_dist = three_opt.three_opt_swap(three_sections[0].copy(), three_sections[1].copy(), three_sections[2].copy())
+        if i % 500 == 0 or i == evaluations-1:
+            print(f"{i}, {p_dist}")
     print("random_three_opt done")
     return route.path, route
 
@@ -34,12 +33,19 @@ def local_three_opt(ds: Dataset, route: Route):
     n_path: list = route.path.copy()
     nodes: list = ds.nodes.copy()
     nodes = nodes[1:]
+    print("idx, dist")
     for i in range(len(nodes)):
-        if i % 100 == 0:
-            print(f"idx: {i}")
         node = nodes[i]
         three_sections = three_opt.cut_three_consecutive_path(route, node)
-        route.path = three_opt.three_opt_swap(three_sections[0], three_sections[1], three_sections[2])
+
+        for j in range(3):
+            if len(three_sections[j]) == 0:
+                print("pause")
+
+        route.path, p_dist = three_opt.three_opt_swap(three_sections[0], three_sections[1], three_sections[2])
+        if i % 1000 == 0 or i == (len(nodes)-1):
+            print(f"{i},{p_dist}")
+    print("local_three_opt done")
     return route.path, route
 
 
@@ -67,24 +73,25 @@ def test1():
 
 def test2():
     ct = datetime.datetime.now()
-    print("start current time:-", ct)
+    print("start time:-", ct)
 
     ds: Dataset = fu.file_reader(3)
     random_path = pu.get_random_path(ds)
     path_dist = pu.get_path_dist(random_path)
-    print("old path dist", path_dist)
+    print("starting path dist", path_dist)
 
     # Note: A normal 3-opt would take (n k) = n!/(k!(n-k)!) tries
     # This version will only take "n" evaluation rounds defined by user
 
-    route = Route.Route(random_path, [], 10000)
+    evaluations = 10000
+    route = Route.Route(random_path, [], evaluations)
+    random_path, route = random_three_opt(ds, route, evaluations)
     random_path, route = local_three_opt(ds, route)
-    # random_path, route = random_three_opt(ds, route, 10000)
     path_dist = pu.get_path_dist(random_path)
-    print("new path dist", path_dist)
+    print("ending path dist", path_dist)
 
     ct = datetime.datetime.now()
-    print("end current time:-", ct)
+    print("end time:-", ct)
 
 
 # test1()

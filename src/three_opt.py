@@ -10,31 +10,78 @@ import math
 
 def three_opt_swap(path_1: list, path_2: list, path_3: list):
     three_opt_paths = []
+    dist_simplified = []
+    r_path_2 = reverse_path(path_2)
+    r_path_3 = reverse_path(path_3)
+
     # 1, 2, 3, 1
     path_option_1 = path_1 + path_2 + path_3
     three_opt_paths.append(path_option_1)
+    temp_dist: float = (pu.cal_dist(path_1[-1], path_2[0])
+                        + pu.cal_dist(path_2[-1], path_3[0])
+                        + pu.cal_dist(path_3[-1], path_1[0]))
+    dist_simplified.append(temp_dist)
+
     # 1, 2', 3', 1
-    path_option_2 = path_1 + reverse_path(path_2) + reverse_path(path_3)
+    path_option_2 = path_1 + r_path_2 + r_path_3
     three_opt_paths.append(path_option_2)
+    temp_dist: float = (pu.cal_dist(path_1[-1], r_path_2[0])
+                        + pu.cal_dist(r_path_2[-1], r_path_3[0])
+                        + pu.cal_dist(r_path_3[-1], path_1[0]))
+    dist_simplified.append(temp_dist)
+
     # 1, 2', 3, 1
-    path_option_3 = path_1 + reverse_path(path_2) + path_3
+    path_option_3 = path_1 + r_path_2 + path_3
     three_opt_paths.append(path_option_3)
+    temp_dist: float = (pu.cal_dist(path_1[-1], r_path_2[0])
+                        + pu.cal_dist(r_path_2[-1], path_3[0])
+                        + pu.cal_dist(path_3[-1], path_1[0]))
+    dist_simplified.append(temp_dist)
+
     # 1, 3, 2, 1
     path_option_4 = path_1 + path_3 + path_2
     three_opt_paths.append(path_option_4)
+    temp_dist: float = (pu.cal_dist(path_1[-1], path_3[0])
+                        + pu.cal_dist(path_3[-1], path_2[0])
+                        + pu.cal_dist(path_2[-1], path_1[0]))
+    dist_simplified.append(temp_dist)
+
     # 1, 3, 2', 1
-    path_option_5 = path_1 + path_3 + reverse_path(path_2)
+    path_option_5 = path_1 + path_3 + r_path_2
     three_opt_paths.append(path_option_5)
+    temp_dist: float = (pu.cal_dist(path_1[-1], path_3[0])
+                        + pu.cal_dist(path_3[-1], r_path_2[0])
+                        + pu.cal_dist(r_path_2[-1], path_1[0]))
+    dist_simplified.append(temp_dist)
+
     # 1, 3', 2', 1
-    path_option_6 = path_1 + reverse_path(path_3) + reverse_path(path_2)
+    path_option_6 = path_1 + r_path_3 + r_path_2
     three_opt_paths.append(path_option_6)
+    temp_dist: float = (pu.cal_dist(path_1[-1], r_path_3[0])
+                        + pu.cal_dist(r_path_3[-1], r_path_2[0])
+                        + pu.cal_dist(r_path_2[-1], path_1[0]))
+    dist_simplified.append(temp_dist)
+
     # 1, 3', 2, 1
-    path_option_7 = path_1 + reverse_path(path_3) + path_2
+    path_option_7 = path_1 + r_path_3 + path_2
     three_opt_paths.append(path_option_7)
+    temp_dist: float = (pu.cal_dist(path_1[-1], r_path_3[0])
+                        + pu.cal_dist(r_path_3[-1], path_2[0])
+                        + pu.cal_dist(path_2[-1], path_1[0]))
+    dist_simplified.append(temp_dist)
 
     # plot_all_3opts(three_opt_paths)
 
-    return find_best_path(three_opt_paths)
+    # This line is old code but still works
+    """
+    best_path, best_path_dist = find_best_path(three_opt_paths)
+    return best_path, best_path_dist
+    """
+
+    new_lowest_dist_idx = dist_simplified.index(min(dist_simplified))
+    new_best_path = three_opt_paths[new_lowest_dist_idx]
+    new_best_dist = pu.get_path_dist(three_opt_paths[new_lowest_dist_idx])
+    return new_best_path, new_best_dist
 
 
 def reverse_path(path: list):
@@ -60,7 +107,8 @@ def find_best_path(paths: list):
             lowest = current
             idx = i
     # print("best path", idx)
-    return paths[idx]
+    lowest_dist = pu.get_path_dist(paths[idx])
+    return paths[idx], lowest_dist
 
 
 def cut_three_rand_path(route: Route, ds: Dataset):
@@ -93,8 +141,7 @@ def cut_three_rand_path(route: Route, ds: Dataset):
         node_sections[2] = path[selected_nodes_idx[2]:]
     else:
         node_sections[2] = path[selected_nodes_idx[2]:] + path[:selected_nodes_idx[0]]
-    # for i in range(3):
-    #    pu.print_path_order(node_sections[i])
+
     return node_sections, route
 
 
@@ -108,9 +155,10 @@ def cut_three_consecutive_path(route: Route, node: Node):
         print("pause")
     # idx = 4
     path_sections = [None] * 3
-    path_sections[0] = get_section(path, idx % path_len, idx+2 % path_len)
-    path_sections[1] = get_section(path, idx+2 % path_len, idx+4 % path_len)
-    path_sections[2] = get_section(path, idx+4 % path_len, idx % path_len)
+    path_sections[0] = get_section(path, (idx) % path_len, (idx+2) % path_len)
+    path_sections[1] = get_section(path, (idx+2) % path_len, (idx+4) % path_len)
+    path_sections[2] = get_section(path, (idx+4) % path_len, (idx) % path_len)
+
     return path_sections
 
 
