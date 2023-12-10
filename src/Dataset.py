@@ -9,7 +9,7 @@ class Dataset:
         self.min_speed = -1
         self.max_speed = -1
         self.renting_ration = -1
-        self.coord_x = []
-        self.coord_y = []
-        self.nodes = [None]
-        self.items = []
+        self.coord_x = []  # List of node x coordinate
+        self.coord_y = []  # List of node y coordinate
+        self.nodes = [None]  # List of nodes
+        self.items = []  # List of items
