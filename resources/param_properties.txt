@@ -1,0 +1,6 @@
+population_size_nsg: 50
+evaluations_tsp: 10000
+run_local_tsp: True
+tournament_size_ksp: 100
+num_generations_ksp: 100
+fill_rate_ksp: 0.5
