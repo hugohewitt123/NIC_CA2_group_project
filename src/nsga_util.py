@@ -54,13 +54,10 @@ def crowded_comparison(p):
     #3: rank
     #4: path population
     #5: packing population
-    for j in range(len(p)-1):
-        for i in range(len(p)-1):
-            if (p[i][3] > p[i+1][3]) or ((p[i][3] == p[i+1][3]) and (p[i][2] > p[i+1][2])):
-                #p[i] < p[i+1] so swap them
-                temp = p[i]
-                p[i] = p[i+1]
-                p[i+1] = temp
+    for i in range(len(p)-1):
+        while (p[i][3] < p[i+1][3]) or ((p[i][3] == p[i+1][3]) and (p[i][2] > p[i+1][2])):
+            #p[i] < p[i+1] so swap them
+            p[i+1], p[i] = p[i], p[i+1]
     return p
 
 
@@ -171,7 +168,7 @@ def run_nsga(ds):
     tournament_size = 10
     num_generations = 100
     #fill rate is the percentage of knapsack to fill to max capacity
-    fill_rate            = 0.1
+    fill_rate            = 0.9
     '''problem constraints'''
     Vmin         = ds.min_speed
     Vmax         = ds.max_speed
@@ -246,7 +243,7 @@ def run_nsga(ds):
             pack_pop.append(i[5])
             path_pop.append(i[4])
     for p in population:
-        print(p[:3])
+        print(p[:4])
 
 ds = fu.file_reader(0)
 run_nsga(ds)
