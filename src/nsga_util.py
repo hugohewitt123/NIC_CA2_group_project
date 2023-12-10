@@ -8,7 +8,6 @@ import file_util as fu
 import pack_util as pack
 import path_util as path
 
-#TODO re-write this:
 def non_dom_sort(P):
     '''function to run the non-dominating sort'''
     #0: time
