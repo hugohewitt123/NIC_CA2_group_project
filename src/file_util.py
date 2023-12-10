@@ -5,6 +5,7 @@ import Node
 import Params
 
 folder_path = "../resources/"
+# folder_path = "/Users/lucaslam/PycharmProjects/pythonProject/NIC_CA2_group_project/resources/"
 file_names = ["a280-n279", "a280-n1395", "a280-n2790",
               "fnl4461-n4460", "fnl4461-n22300", "fnl4461-n44600",
               "pla33810-n33809", "pla33810-n169045", "pla33810-n338090",
