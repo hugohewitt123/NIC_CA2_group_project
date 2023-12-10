@@ -81,6 +81,8 @@ def read_param_properties():
     params.num_generations_ksp = int(lines[4].split(splitter)[1])
     params.fill_rate_ksp = float(lines[5].split(splitter)[1])
 
+    params.dataset_idx = int(lines[-1].split(splitter)[1])  # Last Index
+
     if params.population_size_nsg < params.tournament_size_ksp:
         raise Exception("Tournament of KSP size should be smaller than population size")
 
