@@ -4,6 +4,7 @@ import random
 import numpy as np
 import matplotlib.pyplot as plt
 import Dataset
+from functools import cmp_to_key
 import file_util as fu
 import pack_util as pack
 import path_util as path
@@ -39,8 +40,7 @@ def density_est(I):
             I[j][2] += (I[j+1][i]-I[j-1][i])
     return I
 
-
-def crowded_comparison(p):
+def compare(item1, item2):
     '''function to comare population items'''
     #1. Non-domination rank (i_rank)
     #2. Local crowding distance (i_distance)
@@ -54,12 +54,12 @@ def crowded_comparison(p):
     #3: rank
     #4: path population
     #5: packing population
-    for i in range(len(p)-1):
-        while (p[i][3] < p[i+1][3]) or ((p[i][3] == p[i+1][3]) and (p[i][2] > p[i+1][2])):
-            #p[i] < p[i+1] so swap them
-            p[i+1], p[i] = p[i], p[i+1]
-    return p
-
+    if (item1[3] < item2[3]) or ((item1[3] == item2[3]) and (item1[2] > item2[2])):
+        return -1
+    elif (item1[3] > item2[3]) or ((item1[3] == item2[3]) and (item1[2] < item2[2])):
+        return 1
+    else:
+        return 0
 
 def make_new_pack_pop(population, profits, weights, tournament_size, knapsack_cap):
     '''function to run tournament selection, cross over and mutation for packing population'''
@@ -166,7 +166,7 @@ def run_nsga(ds):
     '''Parameters'''
     population_size = 50
     tournament_size = 10
-    num_generations = 100
+    num_generations = 200
     #fill rate is the percentage of knapsack to fill to max capacity
     fill_rate            = 0.9
     '''problem constraints'''
@@ -182,7 +182,7 @@ def run_nsga(ds):
 
     for x in range(num_generations):
         '''creating the children for the paths and packs'''
-        print("Generation : ", x+1)
+        print("Generation : ", x+1, end='\r')
         profits, weights = pack.get_profit_weights(pack_pop, ds)
         path_dists = []
         for i in path_pop:
@@ -235,13 +235,15 @@ def run_nsga(ds):
         #5: packing population
         #print(population)
 
-        population = crowded_comparison(population)
+        population = sorted(population, key=cmp_to_key(compare))
         population = population[:len(population)//2]
         pack_pop = []
         path_pop = []
         for i in population:
             pack_pop.append(i[5])
             path_pop.append(i[4])
+
+    
     for p in population:
         print(p[:4])
 
