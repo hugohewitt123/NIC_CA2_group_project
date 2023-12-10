@@ -1,3 +1,4 @@
+# /resources/param_properties.txt
 class Param:
     def __init__(self):
         self.population_size_nsg: int = 20

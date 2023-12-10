@@ -60,9 +60,5 @@ def plot_path(path: list, dataset: Dataset, *line_width, **optionals):
     if title != None:
         plt.title(title)
     else:
-        plt.title("hello 123")
+        plt.title("Path")
     plt.show()
-
-
-# Testing Section
-

@@ -15,8 +15,11 @@ file_ext = ".txt"
 
 """
     function: reader
+    description: put txt file into readable data for the program
     params:
         selected_file (int): indicates while file is currently reading in list "file_names"
+    return:
+        the dataset
 """
 def file_reader(selected_file):
     full_path = folder_path + file_names[selected_file] + file_ext
