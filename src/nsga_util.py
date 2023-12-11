@@ -73,16 +73,16 @@ def make_new_pack_pop(population, profits, weights, tournament_size, knapsack_ca
         # c, d = pack.binary_mask_crossover(a, b)
         # c, d = pack.simulated_binary_crossover(a, b)
         # c, d = pack.blend_crossover(a, b)
-
+        
         # Priyanka's code
         # c, d = pack.ordered_crossover(a,b)
         # c, d = pack.cycle_crossover(a,b)
         # c, d = pack.displacement_crossover(a, b)
-
+        
         #mutation
         #e, f = pack.insertion_mutation(c, d)
         e, f = pack.bitflip_mutation(c, d)
-
+        
         pe, we = pack.evaluate_pack(e, ds)
         pf, wf = pack.evaluate_pack(f, ds)
         #for ensuring the weight of the new child knapsack is not exceeded
@@ -242,7 +242,7 @@ def run_nsga(ds, path_population, the_param):
             #4: path population
             #5: packing population
             #6: weights
-
+        
         ## Start of the NSGA-II part ##
         #sorting the population into non-dominating ranks
         rankiter = 0
@@ -261,8 +261,8 @@ def run_nsga(ds, path_population, the_param):
 
         #srting the population according to the crowding distance and non-domination rank
         population = sorted(population, key=cmp_to_key(compare), reverse=False)
-
-        #cutting the population in half so that the best half
+        
+        #cutting the population in half so that the best half 
         # is put forward to the next generation
         population = population[:len(population)//2]
         pack_pop = []

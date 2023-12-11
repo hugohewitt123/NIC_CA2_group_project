@@ -74,7 +74,7 @@ def random_point_crossover(a, b):
     '''Function to perform random-point crossover on the knapsack'''
     num_points = random.randint(1, len(a)-1)
     points = sorted(random.sample(range(1, len(a)), num_points))
-
+    
     c, d = a[:], b[:]
     switch = False
     for point in points:
