@@ -4,9 +4,9 @@ import Item
 import Node
 import Params
 
+
 folder_path = './resources/'
-# folder_path = "C:/Users/hugo/Documents/University/YEAR_4/ECMM409_Nature Inspired Computation/CA2/NIC_CA2_group_project-main/resources/"
-# folder_path = "C:/Users/Lucas/Documents/Academic/Exeter/ECMM409 Nature Inspired Computation/CA2/CA2PY/resources/"
+
 file_names = ["a280-n279", "a280-n1395", "a280-n2790",
               "fnl4461-n4460", "fnl4461-n22300", "fnl4461-n44600",
               "pla33810-n33809", "pla33810-n169045", "pla33810-n338090",
