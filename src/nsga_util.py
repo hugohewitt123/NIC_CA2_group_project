@@ -66,7 +66,7 @@ def make_new_pack_pop(population, profits, weights, tournament_size, knapsack_ca
     new_pop = []
     while len(new_pop) < len(population):
         a, b = pack.tournament_selection(population, profits, weights, tournament_size, knapsack_cap)
-        # c, d = pack.single_point_crossover(a, b)
+        c, d = pack.single_point_crossover(a, b)
         # c, d = pack.two_point_crossover(a, b)
         # c, d = pack.three_point_crossover(a, b)
         # c, d = pack.random_point_crossover(a, b)
@@ -75,16 +75,14 @@ def make_new_pack_pop(population, profits, weights, tournament_size, knapsack_ca
         # c, d = pack.blend_crossover(a, b)
         
         # Priyanka's code
-        # c,d = pack.ordered_crossover(a,b)
-        # c,d = pack.cycle_crossover(a,b)
+        # c, d = pack.ordered_crossover(a,b)
+        # c, d = pack.cycle_crossover(a,b)
         # c, d = pack.displacement_crossover(a, b)
-        c, d = pack.insertion_mutation(a, b)
-
-
-
-
-
+        
+        #mutation
+        #e, f = pack.insertion_mutation(c, d)
         e, f = pack.bitflip_mutation(c, d)
+        
         pe, we = pack.evaluate_pack(e, ds)
         pf, wf = pack.evaluate_pack(f, ds)
         #for ensuring the weight of the new child knapsack is not exceeded

@@ -173,13 +173,19 @@ def displacement_crossover(a, b):
 def insertion_mutation(c, d):
     # Select a random element from chromosome 'c'
     element = random.choice(c)
-
     # Remove the selected element from chromosome 'c'
     c.remove(element)
-
     # Choose a random position in chromosome 'd' to insert the element
     insert_position = random.randint(0, len(d))
     d.insert(insert_position, element)
+
+    # Select a random element from chromosome 'd'
+    element = random.choice(d)
+    # Remove the selected element from chromosome 'd'
+    d.remove(element)
+    # Choose a random position in chromosome 'd' to insert the element
+    insert_position = random.randint(0, len(c))
+    c.insert(insert_position, element)
 
     return c, d
 
