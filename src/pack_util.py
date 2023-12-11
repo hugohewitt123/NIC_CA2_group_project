@@ -170,6 +170,35 @@ def displacement_crossover(a, b):
 
     return c, d
 
+def uniform_crossover(a, b):
+    '''Function to perform uniform crossover on the knapsack'''
+    # Create a binary mask to decide which elements to inherit from each parent
+    mask = [random.choice([True, False]) for _ in range(len(a))]
+
+    # Generate the offspring using the binary mask
+    c = [a[i] if mask[i] else b[i] for i in range(len(a))]
+    d = [b[i] if mask[i] else a[i] for i in range(len(b))]
+
+    return c, d
+
+def gaussian_mutation(c, d, mutation_rate=0.01, mutation_std=0.1):
+    '''Function to perform Gaussian mutation on the knapsack'''
+    mutated_c = np.array(c, dtype=float)
+    mutated_d = np.array(d, dtype=float)
+
+    # Generate a binary mask for mutation
+    mutation_mask_c = np.random.rand(len(c)) < mutation_rate
+    mutation_mask_d = np.random.rand(len(d)) < mutation_rate
+
+    # Apply mutation using Gaussian noise
+    mutated_c += mutation_mask_c * np.random.normal(0, mutation_std, len(c))
+    mutated_d += mutation_mask_d * np.random.normal(0, mutation_std, len(d))
+
+    # Ensure values are within valid range (if applicable)
+    # (This depends on the specific problem and the representation of individuals)
+
+    return mutated_c.tolist(), mutated_d.tolist()
+
 def insertion_mutation(c, d):
     # Select a random element from chromosome 'c'
     element = random.choice(c)
