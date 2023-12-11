@@ -24,3 +24,27 @@ for pop in I:
 #5: packing population
 #6: weights
 print("Done")
+
+import matplotlib.pyplot as plt
+# Extract x and y values
+x_values = [individual[0] for individual in I]
+y_values = [individual[1] for individual in I]
+
+# Create scatter plot
+plt.scatter(x_values, y_values, marker='o', label='Population')
+
+# Set axis labels
+plt.xlabel('Time')
+plt.ylabel('Value')
+
+# Set plot title
+plt.title('Simulated Binary Crossover')
+
+# Add grid
+plt.grid(True)
+
+# Show legend
+plt.legend()
+
+# Show the plot in Visual Studio Code
+plt.show()

@@ -85,9 +85,14 @@ def random_point_crossover(a, b):
     return c, d
 
 def binary_mask_crossover(a, b):
-    mask = [random.choice([0, 1]) for _ in range(len(a))]
-    c = [a[i] if mask[i] == 0 else b[i] for i in range(len(a))]
-    d = [b[i] if mask[i] == 0 else a[i] for i in range(len(b))]
+    # Generate a binary mask of 0s and 1s of the length of a
+    binary_mask = [random.choice([0, 1]) for _ in range(len(a))]
+    # Create child c by selecting elements from parents based on the binary mask
+    c = [a[i] if mask == 0 else b[i] for i, mask in enumerate(binary_mask)]
+
+    # Create child d by selecting elements from parents based on the opposite binary mask
+    d = [a[i] if mask == 1 else b[i] for i, mask in enumerate(binary_mask)]
+
     return c, d
 
 def blend_crossover(a, b, alpha=0.5):

@@ -71,14 +71,14 @@ def make_new_pack_pop(population, profits, weights, tournament_size, knapsack_ca
         # c, d = pack.three_point_crossover(a, b)
         # c, d = pack.random_point_crossover(a, b)
         # c, d = pack.binary_mask_crossover(a, b)
-        # c, d = pack.simulated_binary_crossover(a, b)
+        c, d = pack.simulated_binary_crossover(a, b)
         # c, d = pack.blend_crossover(a, b)
         
         # Priyanka's code
         # c,d = pack.ordered_crossover(a,b)
         # c,d = pack.cycle_crossover(a,b)
         # c, d = pack.displacement_crossover(a, b)
-        c, d = pack.insertion_mutation(a, b)
+        # c, d = pack.insertion_mutation(a, b)
 
 
 
