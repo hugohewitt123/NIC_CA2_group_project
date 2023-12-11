@@ -9,7 +9,8 @@ import file_util as fu
 import pack_util as pack
 import path_util as path
 import Params
-# from pymoo.indicators.hv import Hypervolume
+from pymoo.indicators.hv import Hypervolume
+from sklearn.preprocessing import MinMaxScaler
 
 def non_dom_sort(P):
     '''function to run the non-dominating sort'''
@@ -62,32 +63,61 @@ def compare(i, j):
         #i = j
         return 0
 
-def make_new_pack_pop(population, profits, weights, tournament_size, knapsack_cap, ds):
+def make_new_pack_pop(population, profits, weights, tournament_size, knapsack_cap, ds, type_local):
     '''function to run tournament selection, cross over and mutation for packing population'''
     new_pop = []
     while len(new_pop) < len(population):
         a, b = pack.tournament_selection(population, profits, weights, tournament_size, knapsack_cap)
-        # c, d = pack.single_point_crossover(a, b)
-        # c, d = pack.two_point_crossover(a, b)
-        # c, d = pack.three_point_crossover(a, b)
-        # c, d = pack.random_point_crossover(a, b)
-        # c, d = pack.binary_mask_crossover(a, b)
-        # c, d = pack.simulated_binary_crossover(a, b)
-        c, d = pack.blend_crossover(a, b)
         
-        # c, d = pack.uniform_crossover(a, b)
-
-        # Priyanka's code
-        # c,d = pack.ordered_crossover(a,b)
-        # c,d = pack.cycle_crossover(a,b)
-        # c, d = pack.displacement_crossover(a, b)
-        # e, f = pack.insertion_mutation(c, d)
-
-        # e, f = pack.inversion_mutation(c, d)
+        if type_local ==   0: 
+            c, d = pack.single_point_crossover(a, b)
+            e, f = pack.bitflip_mutation(c, d)
+        elif type_local == 1: 
+            c, d = pack.single_point_crossover(a, b)
+            e, f = pack.inversion_mutation(c, d)
+        elif type_local == 2: 
+            c, d = pack.single_point_crossover(a, b)
+            e, f = pack.gaussian_mutation(c, d)
+        elif type_local == 3: 
+            c, d = pack.single_point_crossover(a, b)
+            e, f = pack.inserted_mutation(c, d)
+        elif type_local == 4: 
+            c, d = pack.two_point_crossover(a, b)
+            e, f = pack.bitflip_mutation(c, d)
+        elif type_local == 5: 
+            c, d = pack.three_point_crossover(a, b)
+            e, f = pack.bitflip_mutation(c, d)
+        elif type_local == 6: 
+            c, d = pack.random_point_crossover(a, b)
+            e, f = pack.bitflip_mutation(c, d)
+        elif type_local == 7: 
+            c, d = pack.binary_mask_crossover(a, b)
+            e, f = pack.bitflip_mutation(c, d)
+        elif type_local == 8: 
+            c, d = pack.simulated_binary_crossover(a, b)
+            e, f = pack.bitflip_mutation(c, d)
+        elif type_local == 9: 
+            c, d = pack.blend_crossover(a, b)
+            e, f = pack.bitflip_mutation(c, d)
+        elif type_local == 10: 
+            c, d = pack.uniform_crossover(a, b)
+            e, f = pack.bitflip_mutation(c, d)
+        elif type_local == 11: 
+            c, d = pack.ordered_crossover(a, b)
+            e, f = pack.bitflip_mutation(c, d)
+        elif type_local == 12: 
+            c, d = pack.cycle_crossover(a, b)
+            e, f = pack.bitflip_mutation(c, d)
+        elif type_local == 13: 
+            c, d = pack.displacement_crossover(a, b)
+            e, f = pack.bitflip_mutation(c, d)
+        elif type_local == 14: 
+            c, d = pack.single_point_crossover(a, b)
+            e, f = pack.bitflip_mutation(c, d)
+        elif type_local == 15: 
+            c, d = pack.single_point_crossover(a, b)
+            e, f = pack.bitflip_mutation(c, d)
         
-        # e, f = gaussian_mutation(c, d)
-
-        e, f = pack.bitflip_mutation(c, d)
         pe, we = pack.evaluate_pack(e, ds)
         pf, wf = pack.evaluate_pack(f, ds)
         #for ensuring the weight of the new child knapsack is not exceeded
@@ -192,6 +222,15 @@ def mutate_path(c, d):
     d[randchoiceb[0]:randchoiceb[1]] = d[randchoiceb[0]:randchoiceb[1]][::-1]
     return c, d
 
+def calculate_hypervolume(population_lo):
+    '''function to calculate the hypervolume of normalise pareto front'''
+    hv_list = []
+    scaler = MinMaxScaler()
+    normalized_values = scaler.fit_transform(np.array([ind[:2] for ind in population_lo]))
+    hv = Hypervolume(ref_point=np.array([0.5, 0.5]))
+    hv_val = hv.do(normalized_values)
+    return hv_val
+
 def run_nsga(ds, path_population, the_param):
     '''function to run the nsga algorithm'''
     '''Parameters'''
@@ -200,6 +239,7 @@ def run_nsga(ds, path_population, the_param):
     num_generations = the_param.num_generations_ksp
     #fill rate is the percentage of knapsack to fill to max capacity
     fill_rate       = the_param.fill_rate_ksp
+    exp_type_nsga   = the_param.exp_type
     '''problem constraints'''
     Vmin         = ds.min_speed
     Vmax         = ds.max_speed
@@ -215,6 +255,7 @@ def run_nsga(ds, path_population, the_param):
     for i in path_pop:
         path_dists.append(path.get_path_dist(i))
     record = []
+    hv_values = []
     #loop for the generations of the NSGA algorithm
     for x in range(num_generations):
         print("Generation : ", x+1, end='\r')
@@ -223,7 +264,7 @@ def run_nsga(ds, path_population, the_param):
         for i in path_pop:
             path_dists.append(path.get_path_dist(i))
         #generate the packing plan children
-        pack_children = make_new_pack_pop(pack_pop, profits, weights, tournament_size, knapsack_cap, ds)
+        pack_children = make_new_pack_pop(pack_pop, profits, weights, tournament_size, knapsack_cap, ds, exp_type_nsga)
         pack_pop = pack_pop + pack_children
         #generate the path children
         path_children = generate_path_children(path_pop, path_dists, tournament_size)
@@ -275,13 +316,15 @@ def run_nsga(ds, path_population, the_param):
         for i in population:
             pack_pop.append(i[5])
             path_pop.append(i[4])
+        hv_val = calculate_hypervolume(population)
+        hv_values.append(hv_val)
         #keeping a record of the population ever 50 generations
         if x % 50:
             record.append(population)
-    return population, record
-    #print("\n")
-    #for p in population:
+    return population, record, hv_values
+    # print("\n")
+    # for p in population:
     #    print(p[:2])
 
-#ds = fu.file_reader(0)
-#run_nsga(ds)
+# ds = fu.file_reader(0)
+# run_nsga(ds)

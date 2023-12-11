@@ -5,4 +5,5 @@ tournament_size_ksp: 5
 num_generations_ksp: 100
 fill_rate_ksp: 1
 random_seed: 49
+exp_type: 0
 dataset_idx: 0
