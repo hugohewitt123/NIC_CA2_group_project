@@ -212,7 +212,7 @@ def run_nsga(ds, path_population, the_param):
         #evaluate the new population for time, weight and profit
         times = evaluate_population(pack_pop, path_pop, ds, Vmax, Vmin, knapsack_cap)
         profits, weights = pack.get_profit_weights(pack_pop, ds)
-        
+
         #zipping the populations together with their associated rank, profitsm weights etc
         ranks = [-1] * len(times)
         distances = [0] * len(times)

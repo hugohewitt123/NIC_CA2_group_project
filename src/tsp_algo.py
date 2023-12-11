@@ -16,10 +16,9 @@ import datetime
         path (Node list): the original path
         evaluations (int): rounds of evaluation
     return:
-        n_path: new optimised path
+        route.path: new optimised path
+        route: Route object
 """
-
-
 def random_three_opt(ds: Dataset, route: Route, evaluations: int, graph_data: TSP_Data):
     n_path: list = route.path.copy()
     print("evaluations, dist")
@@ -40,6 +39,18 @@ def random_three_opt(ds: Dataset, route: Route, evaluations: int, graph_data: TS
     return route.path, route
 
 
+"""
+    function: local_three_opt
+    description: do 3-opt optimise every node
+    params:
+        ds (Dataset): the Dataset object
+        route (Route): the Route object
+        evaluations (int): round of random evaluation needed
+        graph_data (TSP_Data): for generating graphs for data visualisation
+    return:
+        route.path: optimal path after N-time evaluations
+        route: Route object
+"""
 def local_three_opt(ds: Dataset, route: Route, evaluations: int, graph_data: TSP_Data):
     n_path: list = route.path.copy()
     nodes: list = ds.nodes.copy()
@@ -58,6 +69,16 @@ def local_three_opt(ds: Dataset, route: Route, evaluations: int, graph_data: TSP
     return route.path, route
 
 
+"""
+    function: tsp_solve
+    description: implementation of the TSP solver
+    params:
+        file_idx (int)
+        param (Params)
+    return:
+        path_population: node lists of path after 3-opt
+        tsp_graph_data: for plotting graphs
+"""
 def tsp_solve(file_idx: int, param: Params):
     ct = datetime.datetime.now()
     print("tsp start time:-", ct)
@@ -94,6 +115,10 @@ def tsp_solve(file_idx: int, param: Params):
     return path_population, tsp_graph_data
 
 
+"""
+    function: test1 (DEPRECATED)
+    description: testing and debug only
+"""
 # Test Section
 def test1():
     node_1 = Node.Node(2, 6, 1, None)  # A

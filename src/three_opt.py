@@ -6,8 +6,19 @@ import Route
 import Dataset
 import random
 import math
+from warnings import warn
 
-
+"""
+    function: three_opt_swap
+    description: three_opt_swap from 3 node list
+    params:
+        path_1 (Node: list): path section 1
+        path_2 (Node: list): path section 2
+        path_3 (Node: list): path section 3
+    return:
+        new_best_path: best 3-opt path in Node list
+        new_best_dist:  distance of best path
+"""
 def three_opt_swap(path_1: list, path_2: list, path_3: list):
     three_opt_paths = []
     dist_simplified = []
@@ -72,7 +83,7 @@ def three_opt_swap(path_1: list, path_2: list, path_3: list):
 
     # plot_all_3opts(three_opt_paths)
 
-    # This line is old code but still works
+    # This line is old code but still works (But very slow)
     """
     best_path, best_path_dist = find_best_path(three_opt_paths)
     return best_path, best_path_dist
@@ -84,6 +95,14 @@ def three_opt_swap(path_1: list, path_2: list, path_3: list):
     return new_best_path, new_best_dist
 
 
+"""
+    function: reverse_path
+    description: put the Node list in reverse order
+    params:
+        path (Node: list): the path
+    return:
+        r_path: path in reverse order
+"""
 def reverse_path(path: list):
     r_path: Node = []
     for i in range(len(path)):
@@ -91,6 +110,12 @@ def reverse_path(path: list):
     return r_path
 
 
+"""
+    function: plot_all_3opts
+    description: show all path options in graph (visualisation)
+    params:
+        path (Node: list: list): the path
+"""
 def plot_all_3opts(paths: list):
     for i in range(len(paths)):
         dist = round(pu.get_path_dist(paths[i]), 2)
@@ -98,7 +123,17 @@ def plot_all_3opts(paths: list):
         plotter.plot_path(paths[i], None, 2, title=title)
 
 
-def find_best_path(paths: list):
+"""
+    function: find_best_path (DEPRECATED)
+    description: find best path for 3-opts, already integrated into three_opt_swap
+    params:
+        path (Node: list: list): list of paths
+    return:        
+        paths[idx]: the best path (lowest distance)
+        lowest_dist: the distance of the best path
+"""
+def find_best_path(paths: list):  # DEPRECATED
+    warn('This is deprecated', DeprecationWarning, stacklevel=2)
     lowest = -1
     idx = -1
     for i in range(len(paths)):
@@ -111,6 +146,16 @@ def find_best_path(paths: list):
     return paths[idx], lowest_dist
 
 
+"""
+    function: cut_three_rand_path
+    description: cut 3 edges from the path and update the optimised 3-opt record in Route
+    params:
+        route (Route): the Route object
+        ds (Dataset): the Dataset object
+    return:
+        node_sections: 3 paths in Node lists
+        route: updated record
+"""
 def cut_three_rand_path(route: Route, ds: Dataset):
     path = route.path
     idx = ds.nodes.copy()
@@ -145,6 +190,15 @@ def cut_three_rand_path(route: Route, ds: Dataset):
     return node_sections, route
 
 
+"""
+    function: cut_three_rand_path
+    description: cut 3 alternating consecutive edges from the path
+    params:
+        route (Route): the Route object
+        node (Node): the Node object
+    return:
+        path_sections: 3 paths in Node lists
+"""
 def cut_three_consecutive_path(route: Route, node: Node):
     path = route.path.copy()
     # path = [0,1,2,3,4,5,6,7,8]
@@ -162,6 +216,16 @@ def cut_three_consecutive_path(route: Route, node: Node):
     return path_sections
 
 
+"""
+    function: get_section (DEPRECATED)
+    description: handle list that loop around
+    params:
+        path (list): any type of list
+        start (int): starting index
+        end (int): ending index
+    return:
+        path[start:] + path[:end]: the section of the list needed
+"""
 def get_section(path, start, end):
     if start < end:
         return path[start:end]
