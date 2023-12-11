@@ -53,35 +53,56 @@ for pop in I:
 #6: weights
 print("Done")
 
+<<<<<<< Updated upstream
 
 import matplotlib.pyplot as plt
 # Extract x and y values
 x_values = [individual[0] for individual in I]
 y_values = [individual[1] for individual in I]
+=======
+# import matplotlib.pyplot as plt
+# # Extract x and y values
+# x_values = [individual[0] for individual in I]
+# y_values = [individual[1] for individual in I]
+>>>>>>> Stashed changes
 
-# Create scatter plot
-plt.scatter(x_values, y_values, marker='o', label='Population')
+# # Create scatter plot
+# plt.scatter(x_values, y_values, marker='o', label='Population')
 
-# Set axis labels
-plt.xlabel('Time')
-plt.ylabel('Value')
+# # Set axis labels
+# plt.xlabel('Time')
+# plt.ylabel('Value')
 
+<<<<<<< Updated upstream
 # Set plot title
 plt.title('Blend Crossover')
+=======
+# # Set plot title
+# plt.title('Simulated Binary Crossover')
+>>>>>>> Stashed changes
 
-# Add grid
-plt.grid(True)
+# # Add grid
+# plt.grid(True)
 
-# Show legend
-plt.legend()
+# # Show legend
+# plt.legend()
 
+<<<<<<< Updated upstream
 # Show the plot in Visual Studio Code
 plt.show()
 
+=======
+# # Show the plot in Visual Studio Code
+# plt.show()
+>>>>>>> Stashed changes
 
 # min_pf = nu.np.min(pf, axis=0)
 # max_pf = nu.np.max(pf, axis=0)
 # normalized_pf = (pf - min_pf) / (max_pf - min_pf)
 # hv = nu.Hypervolume(nu.np.array([1.0, 1.0]))
 # hypervolume_value = hv.do(normalized_pf)
+<<<<<<< Updated upstream
 # print("Hypervolume:", hypervolume_value)
+=======
+# print("Hypervolume:", hypervolume_value)
+>>>>>>> Stashed changes
