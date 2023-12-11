@@ -4,4 +4,5 @@ run_local_tsp: True
 tournament_size_ksp: 5
 num_generations_ksp: 100
 fill_rate_ksp: 1
+random_seed: 49
 dataset_idx: 0
