@@ -3,10 +3,13 @@ import Dataset
 import Item
 import Node
 import Params
+import os
 
-
-folder_path = './resources/'
-
+script_dir = os.path.dirname(os.path.abspath(__file__))
+script_dir = script_dir.replace("\\", "/")
+folder = "/../resources/"
+folder_path = script_dir + folder
+# folder_path = "C:/Users/Lucas/Documents/Academic/Exeter/ECMM409 Nature Inspired Computation/CA2/CA2PY/resources/"
 file_names = ["a280-n279", "a280-n1395", "a280-n2790",
               "fnl4461-n4460", "fnl4461-n22300", "fnl4461-n44600",
               "pla33810-n33809", "pla33810-n169045", "pla33810-n338090",
@@ -84,6 +87,7 @@ def read_param_properties():
     params.tournament_size_ksp = int(lines[3].split(splitter)[1])
     params.num_generations_ksp = int(lines[4].split(splitter)[1])
     params.fill_rate_ksp = float(lines[5].split(splitter)[1])
+    params.random_seed = int(lines[6].split(splitter)[1])
 
     params.dataset_idx = int(lines[-1].split(splitter)[1])  # Last Index
 

@@ -7,4 +7,5 @@ class Param:
         self.tournament_size_ksp: int = 5
         self.num_generations_ksp: int = 100
         self.fill_rate_ksp: float = 1
+        self.random_seed: int = 49
         self.dataset_idx: int = 0

@@ -16,4 +16,5 @@ Change the param in resource/param_properties
 <br/> tournament_size_ksp (int): Tournament size for fitness test in KSP
 <br/> num_generations_ksp (int): Rounds of fitness in KSP
 <br/> fill_rate_ksp (float): Percentage of the knapsack to fill
+<br/> random_seed (int): Vaule used to ensure the reproducible sequence of random numbers produced
 <br/> dataset_idx (int): Which file reading

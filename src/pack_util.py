@@ -192,6 +192,16 @@ def bitflip_mutation(c, d):
     d[i] = ~d[i]+2
     return c, d
 
+def inversion_mutation(c, d):
+    '''function to perform inversion mutation'''
+    if len(c) >= 2:
+        i_0, i_1 = sorted(random.sample(range(len(c)), 2))
+        c[i_0:min(i_1+1, len(c))] = c[i_0:min(i_1+1, len(c))][::-1]
+    if len(d) >= 2:
+        i_0, i_1 = sorted(random.sample(range(len(d)), 2))
+        d[i_0:min(i_1+1, len(d))] = d[i_0:min(i_1+1, len(d))][::-1]
+    return c, d
+
 def generate_random_population(population_size, num_of_items, ds, knapsack_cap,fill_rate):
     '''function to generate initial population'''
     population = []

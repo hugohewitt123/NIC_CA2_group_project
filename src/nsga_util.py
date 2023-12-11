@@ -9,6 +9,7 @@ import file_util as fu
 import pack_util as pack
 import path_util as path
 import Params
+from pymoo.indicators.hv import Hypervolume
 
 def non_dom_sort(P):
     '''function to run the non-dominating sort'''
@@ -66,7 +67,7 @@ def make_new_pack_pop(population, profits, weights, tournament_size, knapsack_ca
     new_pop = []
     while len(new_pop) < len(population):
         a, b = pack.tournament_selection(population, profits, weights, tournament_size, knapsack_cap)
-        # c, d = pack.single_point_crossover(a, b)
+        c, d = pack.single_point_crossover(a, b)
         # c, d = pack.two_point_crossover(a, b)
         # c, d = pack.three_point_crossover(a, b)
         # c, d = pack.random_point_crossover(a, b)
@@ -78,11 +79,9 @@ def make_new_pack_pop(population, profits, weights, tournament_size, knapsack_ca
         # c,d = pack.ordered_crossover(a,b)
         # c,d = pack.cycle_crossover(a,b)
         # c, d = pack.displacement_crossover(a, b)
-        c, d = pack.insertion_mutation(a, b)
+        # c, d = pack.insertion_mutation(a, b)
 
-
-
-
+        # c, d = pack.inversion_mutation(a, b)
 
         e, f = pack.bitflip_mutation(c, d)
         pe, we = pack.evaluate_pack(e, ds)
