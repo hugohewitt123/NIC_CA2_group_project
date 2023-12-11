@@ -109,6 +109,80 @@ def simulated_binary_crossover(a, b, eta=2, prob_cross=0.9):
 
     return c, d
 
+def ordered_crossover(a, b):
+    # Randomly select two crossover points
+    points = sorted(random.sample(range(len(a)), 2))
+
+    # Create masks to preserve selected segments
+    mask_a = [False] * len(a)
+    mask_b = [False] * len(b)
+
+    # Mark selected segments in the masks
+    for i in range(points[0], points[1]):
+        mask_a[i] = True
+        mask_b[i] = True
+
+    # Get segments for offspring by copying the selected segments
+    segment_a = [gene for gene, mask in zip(b, mask_a) if not mask]
+    segment_b = [gene for gene, mask in zip(a, mask_b) if not mask]
+
+    # Create offspring by combining segments and preserving order
+    c = segment_a[:points[0]] + a[points[0]:points[1]] + segment_a[points[0]:]
+    d = segment_b[:points[0]] + b[points[0]:points[1]] + segment_b[points[0]:]
+
+    return c, d
+
+def cycle_crossover(a, b):
+    size = len(a)
+    cycle = [False] * size
+    child1, child2 = [-1] * size, [-1] * size
+
+    # Start with the first cycle
+    index = 0
+    while not cycle[index]:
+        cycle[index] = True
+
+        child1[index] = a[index]
+        child2[index] = b[index]
+
+        value_b = b[index]
+        index = a.index(value_b)
+
+    # Fill in remaining elements
+    for i in range(size):
+        if not cycle[i]:
+            child1[i] = b[i]
+            child2[i] = a[i]
+
+    return child1, child2
+
+def displacement_crossover(a, b):
+    # Randomly select a crossover segment
+    segment_length = random.randint(1, min(len(a), len(b)) - 1)
+    start_index = random.randint(0, min(len(a), len(b)) - segment_length)
+
+    # Extract the selected segment from both parents
+    segment_a = a[start_index:start_index + segment_length]
+    segment_b = b[start_index:start_index + segment_length]
+
+    # Create offspring by replacing the segment with the other parent's segment
+    c = a[:start_index] + segment_b + a[start_index + segment_length:]
+    d = b[:start_index] + segment_a + b[start_index + segment_length:]
+
+    return c, d
+
+def insertion_mutation(c, d):
+    # Select a random element from chromosome 'c'
+    element = random.choice(c)
+
+    # Remove the selected element from chromosome 'c'
+    c.remove(element)
+
+    # Choose a random position in chromosome 'd' to insert the element
+    insert_position = random.randint(0, len(d))
+    d.insert(insert_position, element)
+
+    return c, d
 
 
 def bitflip_mutation(c, d):
