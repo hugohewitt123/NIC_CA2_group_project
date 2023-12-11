@@ -5,16 +5,16 @@ import datetime
 import random
 
 
-# WARNING!!! DO NOT RUN THIS FUNCTION IN THE LARGEST DATA SET
 """
-    function: get_dist_matrix
+    WARNING!!! DO NOT RUN THIS FUNCTION IN THE LARGEST DATA SET
+    function: get_dist_matrix (DEPRECATED)
     description: get distance between every nodes
     params:
         ds (Dataset): the dataset
     return:
         dist_matrix: Distance matrix in from of 2D array. Each node correspond to the node Id
 """
-def get_dist_matrix(ds: Dataset):
+def get_dist_matrix(ds: Dataset):  # DEPRECATED
     print(datetime.datetime.now(), "get matrix")
     dimension: int = 0
     dimension = ds.dimension + 1
