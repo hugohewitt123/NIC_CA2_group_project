@@ -67,7 +67,7 @@ def make_new_pack_pop(population, profits, weights, tournament_size, knapsack_ca
     new_pop = []
     while len(new_pop) < len(population):
         a, b = pack.tournament_selection(population, profits, weights, tournament_size, knapsack_cap)
-        c, d = pack.single_point_crossover(a, b)
+        # c, d = pack.single_point_crossover(a, b)
         # c, d = pack.two_point_crossover(a, b)
         # c, d = pack.three_point_crossover(a, b)
         # c, d = pack.random_point_crossover(a, b)
