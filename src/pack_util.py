@@ -55,6 +55,62 @@ def single_point_crossover(a, b):
 
     return c, d
 
+def two_point_crossover(a, b):
+    '''Function to perform two-point crossover on the knapsack'''
+    x, y = sorted(random.sample(range(1, len(a)-1), 2))
+    c = a[:x] + b[x:y] + a[y:]
+    d = b[:x] + a[x:y] + b[y:]
+
+    return c, d
+
+def three_point_crossover(a, b):
+    '''Function to perform three-point crossover on the knapsack'''
+    x, y, z = sorted(random.sample(range(1, len(a)-1), 3))
+    c = a[:x] + b[x:y] + a[y:z] + b[z:]
+    d = b[:x] + a[x:y] + b[y:z] + a[z:]
+
+    return c, d
+
+def random_point_crossover(a, b):
+    '''Function to perform random-point crossover on the knapsack'''
+    num_points = random.randint(1, len(a)-1)
+    points = sorted(random.sample(range(1, len(a)), num_points))
+    
+    c, d = a[:], b[:]
+    switch = False
+    for point in points:
+        if switch:
+            c[point:], d[point:] = d[point:], c[point:]
+        switch = not switch
+
+    return c, d
+
+def binary_mask_crossover(a, b):
+    mask = [random.choice([0, 1]) for _ in range(len(a))]
+    c = [a[i] if mask[i] == 0 else b[i] for i in range(len(a))]
+    d = [b[i] if mask[i] == 0 else a[i] for i in range(len(b))]
+    return c, d
+
+def blend_crossover(a, b, alpha=0.5):
+    c = [a[i] if random.random() < alpha else b[i] for i in range(len(a))]
+    d = [b[i] if random.random() < alpha else a[i] for i in range(len(b))]
+    return c, d
+
+def simulated_binary_crossover(a, b, eta=2, prob_cross=0.9):
+    c = list(map(int, a))
+    d = list(map(int, b))
+
+    if random.random() < prob_cross:
+        for i in range(len(a)):
+            if random.random() < 0.5:
+                beta = (2.0 * random.random())**(1.0 / (eta + 1))
+                c[i] = int(0.5 * (((1 + beta) * a[i]) + (1 - beta) * b[i]))
+                d[i] = int(0.5 * (((1 - beta) * a[i]) + (1 + beta) * b[i]))
+
+    return c, d
+
+
+
 def bitflip_mutation(c, d):
     '''function to perform bitflip mutation'''
     i = random.randint(0,len(c)-1)
