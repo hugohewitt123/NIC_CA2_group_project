@@ -12,7 +12,8 @@ ds = fu.file_reader(the_param.dataset_idx)
 #returns the final population form and the history of the generations, recorded ever 50 generations
 final_population, record = nsga_util.run_nsga(ds, tsp_population, the_param)
 print("\n")
-for pop in final_population:
+I = sorted(final_population, key=lambda x :x[1])
+for pop in I:
     print(pop[:2])
 '''format of the population array'''
 #0: time

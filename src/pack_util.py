@@ -14,10 +14,6 @@ def node_dist(node1, node2):
     z = math.sqrt(z)
     return(z)
 
-def check_problem_constraints(knapsack_capacity):
-    '''function to check that the problem constraints aren't violated'''
-    ###TODO###
-
 def velocity(w, cap):
     '''funcition to work out the current velocity'''
     return 1.0 - ((1-0.1)/cap)*w
@@ -28,6 +24,7 @@ def tournament_selection(population, profits, weights, tournament_size, knapsack
     N2 = []
     visited1 = []
     visited2 = []
+    #selecting a number random items from the population depending on the tournament size
     for i in range(tournament_size):
         randchoice1 = random.choice([i for i in range(0,len(population)) if i not in visited1])
         randchoice2 = random.choice([i for i in range(0,len(population)) if i not in visited2])
@@ -35,7 +32,9 @@ def tournament_selection(population, profits, weights, tournament_size, knapsack
         N2.append(randchoice2)
         visited1.append(randchoice1)
         visited2.append(randchoice2)
-    a = b = a_i = b_i = 0
+    #choosing the items in the tournament with the best profit
+        #(given the knapsack capacity isn't violated)
+    a = b = a_i = b_i = -1
     for i in N1:
         if profits[i] > a and weights[i] < knapsack_cap:
             a = profits[i]
@@ -69,6 +68,7 @@ def generate_random_population(population_size, num_of_items, ds, knapsack_cap,f
     for i in range(population_size):
         lst = [0]*num_of_items
         weight = 0
+        #filling the knapsack until the weight capacity is reached
         while weight < knapsack_cap*fill_rate:
             rnd = random.randint(0,num_of_items-1)
             if lst[rnd] == 0:
@@ -82,6 +82,7 @@ def evaluate_pack(a, ds):
     p = 0
     w = 0
     for i in range(len(a)):
+        #if the pack plan picks up the item (1) get the weight and profit from the dataset
         if a[i] == 1:
             w += ds.items[i+1].weight
             p += ds.items[i+1].profit
@@ -91,6 +92,7 @@ def get_profit_weights(population, ds):
     '''function to get the total weight of the population'''
     profits = []
     weights = []
+    #evaluates the weight and profit for the whole population
     for pop in population:
         p = 0
         w = 0
