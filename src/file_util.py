@@ -7,9 +7,14 @@ import os
 
 # script_dir = os.path.dirname(os.path.abspath(__file__))
 # script_dir = script_dir.replace("\\", "/")
+<<<<<<< Updated upstream
 # folder = "/../resources/"
 # folder_path = script_dir + folder
 folder_path = './resources/'
+=======
+folder_path = "./resources/"
+# folder_path = script_dir + folder
+>>>>>>> Stashed changes
 # folder_path = "C:/Users/Lucas/Documents/Academic/Exeter/ECMM409 Nature Inspired Computation/CA2/CA2PY/resources/"
 file_names = ["a280-n279", "a280-n1395", "a280-n2790",
               "fnl4461-n4460", "fnl4461-n22300", "fnl4461-n44600",
