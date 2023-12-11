@@ -132,7 +132,7 @@ def plot_all_3opts(paths: list):
         paths[idx]: the best path (lowest distance)
         lowest_dist: the distance of the best path
 """
-def find_best_path(paths: list):
+def find_best_path(paths: list):  # DEPRECATED
     warn('This is deprecated', DeprecationWarning, stacklevel=2)
     lowest = -1
     idx = -1
