@@ -4,6 +4,8 @@ import Item
 import Node
 import Params
 import os
+import csv
+from datetime import datetime
 
 # script_dir = os.path.dirname(os.path.abspath(__file__))
 # script_dir = script_dir.replace("\\", "/")
@@ -84,11 +86,16 @@ def read_param_properties():
         lines = f.read().splitlines()
     params.population_size_nsg = int(lines[0].split(splitter)[1])
     params.evaluations_tsp = int(lines[1].split(splitter)[1])
-    params.run_local_tsp = bool(lines[2].split(splitter)[1])
+    run_local_tsp_str = str(lines[2].split(splitter)[1]).lower()
+    if run_local_tsp_str == 'true':
+        params.run_local_tsp = True
+    else:
+        params.run_local_tsp = False
     params.tournament_size_ksp = int(lines[3].split(splitter)[1])
     params.num_generations_ksp = int(lines[4].split(splitter)[1])
     params.fill_rate_ksp = float(lines[5].split(splitter)[1])
     params.random_seed = int(lines[6].split(splitter)[1])
+    params.exp_type = int(lines[7].split(splitter)[1])
 
     params.dataset_idx = int(lines[-1].split(splitter)[1])  # Last Index
 
@@ -96,3 +103,26 @@ def read_param_properties():
         raise Exception("Tournament of KSP size should be smaller than population size")
 
     return params
+
+def write_results(final_population, hyper_volume, exp_local):
+    output_dir = 'output_files'
+    os.makedirs(output_dir, exist_ok=True)
+
+    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+    output_file_path = os.path.join(output_dir, f'output_exp{exp_local}_{timestamp}.csv')
+
+    time_values = [individual[0] for individual in final_population]
+    profit_values = [individual[1] for individual in final_population]
+    exp_locals = [exp_local] * len(time_values)
+    
+    max_length = max(len(time_values), len(profit_values), len(hyper_volume))
+
+    time_values.extend([''] * (max_length - len(time_values)))
+    profit_values.extend([''] * (max_length - len(profit_values)))
+    hyper_volume.extend([''] * (max_length - len(hyper_volume)))
+    exp_locals.extend([''] * (max_length - len(exp_locals)))
+
+    with open(output_file_path, mode='w', newline='') as file:
+        writer = csv.writer(file, delimiter=',')
+        writer.writerow(['Time', 'Profit', 'Hypervolume', 'exe_type'])
+        writer.writerows(zip(time_values, profit_values, hyper_volume, exp_locals))
