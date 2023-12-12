@@ -24,7 +24,7 @@ tournament_size_ksp (int): Tournament size for fitness test in KSP <br/>
 num_generations_ksp (int): Rounds of fitness in KSP <br/> 
 fill_rate_ksp (float): Percentage of the knapsack to fill <br/> 
 random_seed (int): Vaule used to ensure the reproducible sequence of random numbers produced <br/> 
-exp_type (int): Number used to define different experiments based on different combination of crossover and mutation functions <br/> 
+exp_type (int): Number used to define different experiments based on different combination of crossover and mutation operators <br/> 
 dataset_idx (int): Which file reading <br/> 
 
 <h3> File Index (dataset_idx): </h3>
