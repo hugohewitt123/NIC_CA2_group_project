@@ -7,6 +7,12 @@ NIC group project to solve the travelling thief problem
 <h3>How to run: </h3>
 Please run "solver.py" in folder "src"
 
+<h3>Note that: </h3>
+For dataset_idx: 0, 2, 3, 5 datasets, we just keep the original parameters unchanged and run as the step above; <br/>
+For dataset_idx: 1, 4 datasets, we have to change the "exp_type: 20" to "exp_type: 0"; <br/>
+For dataset_idx: 6, 8 datasets, we have to change the "run_local_tsp: True" to "run_local_tsp: False"; <br/>
+For dataset_idx: 7 dataset, we have to change both the "run_local_tsp: True" to "run_local_tsp: False" and the "exp_type: 20" to "exp_type: 0". <br/>
+
 
 <h3> Params: </h3>
 Change the param in resource/param_properties <br/> 
@@ -16,9 +22,9 @@ evaluations_tsp (int): Rounds of fitness in TSP <br/>
 run_local_tsp (bool): Optimise every node in TSP <br/> 
 tournament_size_ksp (int): Tournament size for fitness test in KSP <br/> 
 num_generations_ksp (int): Rounds of fitness in KSP <br/> 
-fill_rate_ksp (float): Percentage of the knapsack to fill <br/> random_seed (int): Vaule used to ensure the reproducible sequence of random numbers produced
-<br/> exp_type (int): Number used to define different experiments based on different combination of crossover and mutation functions
-<br/> 
+fill_rate_ksp (float): Percentage of the knapsack to fill <br/> 
+random_seed (int): Vaule used to ensure the reproducible sequence of random numbers produced <br/> 
+exp_type (int): Number used to define different experiments based on different combination of crossover and mutation functions <br/> 
 dataset_idx (int): Which file reading <br/> 
 
 <h3> File Index (dataset_idx): </h3>
