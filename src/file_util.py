@@ -109,7 +109,7 @@ def write_results(final_population, hyper_volume, exp_local):
 
     time_values = [individual[0] for individual in final_population]
     profit_values = [individual[1] for individual in final_population]
-    hyper_volumes = [individual[0] for individual in final_population]
+    hyper_volumes = hyper_volume
     
     max_length = max(len(time_values), len(profit_values), len(hyper_volumes))
 
@@ -120,4 +120,4 @@ def write_results(final_population, hyper_volume, exp_local):
     with open(output_file_path, mode='w', newline='') as file:
         writer = csv.writer(file, delimiter=',')
         writer.writerow(['Time', 'Profit', 'Hypervolume'])
-        writer.writerows(zip(time_values, profit_values))
+        writer.writerows(zip(time_values, profit_values, hyper_volumes))

@@ -227,7 +227,7 @@ def calculate_hypervolume(population_lo):
     hv_list = []
     scaler = MinMaxScaler()
     normalized_values = scaler.fit_transform(np.array([ind[:2] for ind in population_lo]))
-    hv = Hypervolume(ref_point=np.array([0.5, 0.5]))
+    hv = Hypervolume(ref_point=np.array([1.0, 1.0]))
     hv_val = hv.do(normalized_values)
     return hv_val
 

@@ -1,4 +1,4 @@
-population_size_nsg: 100
+population_size_nsg: 20
 evaluations_tsp: 10000
 run_local_tsp: True
 tournament_size_ksp: 5
