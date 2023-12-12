@@ -71,9 +71,9 @@ def make_new_pack_pop(population, profits, weights, tournament_size, knapsack_ca
         # c, d = pack.two_point_crossover(a, b)
         # c, d = pack.three_point_crossover(a, b)
         # c, d = pack.random_point_crossover(a, b)
-        # c, d = pack.binary_mask_crossover(a, b)
+        c, d = pack.binary_mask_crossover(a, b)
         # c, d = pack.simulated_binary_crossover(a, b)
-        c, d = pack.blend_crossover(a, b)
+        # c, d = pack.blend_crossover(a, b)
         
         # c, d = pack.uniform_crossover(a, b)
 
@@ -81,7 +81,7 @@ def make_new_pack_pop(population, profits, weights, tournament_size, knapsack_ca
         # c,d = pack.ordered_crossover(a,b)
         # c,d = pack.cycle_crossover(a,b)
         # c, d = pack.displacement_crossover(a, b)
-        # e, f = pack.insertion_mutation(c, d)
+        
 
         # e, f = pack.inversion_mutation(c, d)
         

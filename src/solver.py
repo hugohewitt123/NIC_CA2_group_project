@@ -67,7 +67,7 @@ plt.xlabel('Time')
 plt.ylabel('Value')
 
 # Set plot title
-plt.title('Blend Crossover')
+plt.title('Binary Mask Crossover')
 
 # Add grid
 plt.grid(True)
