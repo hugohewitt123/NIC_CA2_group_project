@@ -310,11 +310,13 @@ def run_nsga(ds, path_population, the_param):
         for i in population:
             pack_pop.append(i[5])
             path_pop.append(i[4])
-        hv_val = calculate_hypervolume(population)
-        hv_values.append(hv_val)
+        # hv_val = calculate_hypervolume(population)
+        # hv_values.append(hv_val)
         #keeping a record of the population ever 50 generations
         if x % 50:
             record.append(population)
+    # hv_val = calculate_hypervolume(population)
+    # hv_values.append(hv_val)
     return population, record, hv_values
     # print("\n")
     # for p in population:

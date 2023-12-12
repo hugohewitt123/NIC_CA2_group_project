@@ -19,7 +19,8 @@ I = sorted(final_population, key=lambda x :x[1])
 for pop in I:
     print(pop[:2])
 print(hvs)
-fu.write_results(I, hvs, the_param.exp_type)
+fu.write_results(I, hvs, the_param.exp_type, the_param.dataset_idx)
+fu.write_to_f_file(I, the_param.dataset_idx)
 '''format of the population array'''
 #0: time
 #1: profit
