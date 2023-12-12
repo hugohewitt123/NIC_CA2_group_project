@@ -13,6 +13,9 @@ For dataset_idx: 1, 4 datasets, we have to change the "exp_type: 20" to "exp_typ
 For dataset_idx: 6, 8 datasets, we have to change the "run_local_tsp: True" to "run_local_tsp: False"; <br/>
 For dataset_idx: 7 dataset, we have to change both the "run_local_tsp: True" to "run_local_tsp: False" and the "exp_type: 20" to "exp_type: 0". <br/>
 
+<h3>How to plot: </h3>
+Please run "plot.ipynb" in folder "src"
+
 
 <h3> Params: </h3>
 Change the param in resource/param_properties <br/> 
