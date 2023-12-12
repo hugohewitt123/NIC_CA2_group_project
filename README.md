@@ -46,3 +46,4 @@ dataset_idx (int): Which file reading <br/>
 10: ordered_crossover          + bitflip_mutation <br/> 
 11: cycle_crossover            + bitflip_mutation <br/> 
 12: displacement_crossover     + bitflip_mutation <br/> 
+other number: ordered_crossover + inversion_mutation (our best choice and result)<br/> 

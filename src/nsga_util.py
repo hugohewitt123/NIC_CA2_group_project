@@ -109,8 +109,8 @@ def make_new_pack_pop(population, profits, weights, tournament_size, knapsack_ca
             c, d = pack.displacement_crossover(a, b)
             e, f = pack.bitflip_mutation(c, d)
         else:
-            c, d = pack.single_point_crossover(a, b)
-            e, f = pack.bitflip_mutation(c, d)
+            c, d = pack.ordered_crossover(a, b)
+            e, f = pack.inversion_mutation(c, d)
         
         pe, we = pack.evaluate_pack(e, ds)
         pf, wf = pack.evaluate_pack(f, ds)
