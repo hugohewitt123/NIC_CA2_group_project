@@ -111,10 +111,7 @@ def make_new_pack_pop(population, profits, weights, tournament_size, knapsack_ca
         elif type_local == 13: 
             c, d = pack.displacement_crossover(a, b)
             e, f = pack.bitflip_mutation(c, d)
-        elif type_local == 14: 
-            c, d = pack.single_point_crossover(a, b)
-            e, f = pack.bitflip_mutation(c, d)
-        elif type_local == 15: 
+        else:
             c, d = pack.single_point_crossover(a, b)
             e, f = pack.bitflip_mutation(c, d)
         
