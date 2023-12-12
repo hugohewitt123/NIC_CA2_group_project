@@ -104,24 +104,40 @@ def read_param_properties():
 
     return params
 
-def write_results(final_population, hyper_volume, exp_local):
+def write_results(final_population, hyper_volume, exp_local, dataset_local):
     output_dir = 'output_files'
     os.makedirs(output_dir, exist_ok=True)
 
     timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-    output_file_path = os.path.join(output_dir, f'output_exp{exp_local}_{timestamp}.csv')
+    output_file_path = os.path.join(output_dir, f'dataset{dataset_local}_exp{exp_local}_{timestamp}.csv')
 
     time_values = [individual[0] for individual in final_population]
     profit_values = [individual[1] for individual in final_population]
-    hyper_volumes = hyper_volume
+    exp_locals = [exp_local] * len(hyper_volume)
+    dataset_locals = [dataset_local] * len(hyper_volume)
     
-    max_length = max(len(time_values), len(profit_values), len(hyper_volumes))
+    max_length = max(len(time_values), len(profit_values), len(hyper_volume))
 
     time_values.extend([''] * (max_length - len(time_values)))
     profit_values.extend([''] * (max_length - len(profit_values)))
-    hyper_volumes.extend([''] * (max_length - len(hyper_volumes)))
+    hyper_volume.extend([''] * (max_length - len(hyper_volume)))
+    exp_locals.extend([''] * (max_length - len(exp_locals)))
+    dataset_locals.extend([''] * (max_length - len(dataset_locals)))
 
     with open(output_file_path, mode='w', newline='') as file:
         writer = csv.writer(file, delimiter=',')
-        writer.writerow(['Time', 'Profit', 'Hypervolume'])
-        writer.writerows(zip(time_values, profit_values, hyper_volumes))
+        writer.writerow(['Time', 'Profit', 'Hypervolume', 'exp_type', 'dataset_idx'])
+        writer.writerows(zip(time_values, profit_values, hyper_volume, exp_locals, dataset_locals))
+
+def write_to_f_file(final_population, dataset_local):
+    output_dir='output_files'
+    os.makedirs(output_dir, exist_ok=True)
+
+    # timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+    output_file_path = os.path.join(output_dir, f'group_M_{dataset_local}.f')
+
+    with open(output_file_path, 'w') as f_file:
+        for individual in final_population:
+            time_value = individual[0]
+            profit_value = individual[1]
+            f_file.write(f'{time_value} {profit_value}\n')
