@@ -79,36 +79,33 @@ def make_new_pack_pop(population, profits, weights, tournament_size, knapsack_ca
             c, d = pack.single_point_crossover(a, b)
             e, f = pack.gaussian_mutation(c, d)
         elif type_local == 3: 
-            c, d = pack.single_point_crossover(a, b)
-            e, f = pack.inserted_mutation(c, d)
-        elif type_local == 4: 
             c, d = pack.two_point_crossover(a, b)
             e, f = pack.bitflip_mutation(c, d)
-        elif type_local == 5: 
+        elif type_local == 4: 
             c, d = pack.three_point_crossover(a, b)
             e, f = pack.bitflip_mutation(c, d)
-        elif type_local == 6: 
+        elif type_local == 5: 
             c, d = pack.random_point_crossover(a, b)
             e, f = pack.bitflip_mutation(c, d)
-        elif type_local == 7: 
+        elif type_local == 6: 
             c, d = pack.binary_mask_crossover(a, b)
             e, f = pack.bitflip_mutation(c, d)
-        elif type_local == 8: 
+        elif type_local == 7: 
             c, d = pack.simulated_binary_crossover(a, b)
             e, f = pack.bitflip_mutation(c, d)
-        elif type_local == 9: 
+        elif type_local == 8: 
             c, d = pack.blend_crossover(a, b)
             e, f = pack.bitflip_mutation(c, d)
-        elif type_local == 10: 
+        elif type_local == 9: 
             c, d = pack.uniform_crossover(a, b)
             e, f = pack.bitflip_mutation(c, d)
-        elif type_local == 11: 
+        elif type_local == 10: 
             c, d = pack.ordered_crossover(a, b)
             e, f = pack.bitflip_mutation(c, d)
-        elif type_local == 12: 
+        elif type_local == 11: 
             c, d = pack.cycle_crossover(a, b)
             e, f = pack.bitflip_mutation(c, d)
-        elif type_local == 13: 
+        elif type_local == 12: 
             c, d = pack.displacement_crossover(a, b)
             e, f = pack.bitflip_mutation(c, d)
         else:
