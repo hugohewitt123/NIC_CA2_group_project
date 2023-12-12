@@ -80,7 +80,11 @@ def read_param_properties():
         lines = f.read().splitlines()
     params.population_size_nsg = int(lines[0].split(splitter)[1])
     params.evaluations_tsp = int(lines[1].split(splitter)[1])
-    params.run_local_tsp = bool(lines[2].split(splitter)[1])
+    run_local_tsp_str = str(lines[2].split(splitter)[1]).lower()
+    if run_local_tsp_str == 'true':
+        params.run_local_tsp = True
+    else:
+        params.run_local_tsp = False
     params.tournament_size_ksp = int(lines[3].split(splitter)[1])
     params.num_generations_ksp = int(lines[4].split(splitter)[1])
     params.fill_rate_ksp = float(lines[5].split(splitter)[1])
