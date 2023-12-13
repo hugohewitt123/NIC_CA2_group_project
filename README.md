@@ -145,7 +145,7 @@ dataset_idx (int): Which file reading <br/>
 7: pla33810-n169045.txt <br/>
 8: pla33810-n338090.txt <br/>
 
-<h3> exp_type Meaning Indicator: </h3>
+<h3> Operators Indicator (exp_type): </h3>
 0:  single_point_crossover     + bitflip_mutation <br/> 
 1:  single_point_crossover     + inversion_mutation <br/> 
 2:  single_point_crossover     + gaussian_mutation <br/> 
