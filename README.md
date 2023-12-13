@@ -102,7 +102,7 @@ tournament_size_ksp: 5 <br/>
 num_generations_ksp: 100 <br/>
 fill_rate_ksp: 1 <br/>
 random_seed: 49 <br/>
-exp_type: 1 <br/>
+exp_type: 0 <br/>
 dataset_idx: 7 <br/>
 
 9. For pla33810-n338090.txt <br/>
@@ -114,7 +114,7 @@ tournament_size_ksp: 5 <br/>
 num_generations_ksp: 100 <br/>
 fill_rate_ksp: 1 <br/>
 random_seed: 49 <br/>
-exp_type: 1 <br/>
+exp_type: 0 <br/>
 dataset_idx: 8 <br/>
 
 <h3>How to plot: </h3>
