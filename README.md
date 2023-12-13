@@ -87,7 +87,7 @@ population_size_nsg: 20 <br/>
 evaluations_tsp: 1000 <br/>
 run_local_tsp: False <br/>
 tournament_size_ksp: 5 <br/>
-num_generations_ksp: 200 <br/>
+num_generations_ksp: 100 <br/>  
 fill_rate_ksp: 1 <br/>
 random_seed: 49 <br/>
 exp_type: 20 <br/>
@@ -99,10 +99,10 @@ population_size_nsg: 20 <br/>
 evaluations_tsp: 1000 <br/>
 run_local_tsp: False <br/>
 tournament_size_ksp: 5 <br/>
-num_generations_ksp: 200 <br/>
+num_generations_ksp: 100 <br/>
 fill_rate_ksp: 1 <br/>
 random_seed: 49 <br/>
-exp_type: 13 <br/>
+exp_type: 1 <br/>
 dataset_idx: 7 <br/>
 
 9. For pla33810-n338090.txt <br/>
@@ -111,10 +111,10 @@ population_size_nsg: 20 <br/>
 evaluations_tsp: 1000 <br/>
 run_local_tsp: False <br/>
 tournament_size_ksp: 5 <br/>
-num_generations_ksp: 200 <br/>
+num_generations_ksp: 100 <br/>
 fill_rate_ksp: 1 <br/>
 random_seed: 49 <br/>
-exp_type: 20 <br/>
+exp_type: 1 <br/>
 dataset_idx: 8 <br/>
 
 <h3>How to plot: </h3>
