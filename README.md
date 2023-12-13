@@ -8,10 +8,114 @@ NIC group project to solve the travelling thief problem
 Please run "solver.py" in folder "src"
 
 <h3>Note that: </h3>
-For dataset_idx: 0, 2, 3, 5 datasets, we just keep the original parameters unchanged and run as the step above; <br/>
-For dataset_idx: 1, 4 datasets, we have to change the "exp_type: 20" to "exp_type: 0"; <br/>
-For dataset_idx: 6, 8 datasets, we have to change the "run_local_tsp: True" to "run_local_tsp: False"; <br/>
-For dataset_idx: 7 dataset, we have to change both the "run_local_tsp: True" to "run_local_tsp: False" and the "exp_type: 20" to "exp_type: 0". <br/>
+
+1. For a280-n279.txt <br/>
+
+population_size_nsg: 100 <br/>
+evaluations_tsp: 10000 <br/>
+run_local_tsp: True <br/>
+tournament_size_ksp: 5 <br/>
+num_generations_ksp: 200 <br/>
+fill_rate_ksp: 1 <br/>
+random_seed: 49 <br/>
+exp_type: 20 <br/>
+dataset_idx: 0 <br/>
+
+2. For a280-n1395.txt <br/>
+
+population_size_nsg: 100 <br/>
+evaluations_tsp: 10000 <br/>
+run_local_tsp: True <br/>
+tournament_size_ksp: 5 <br/>
+num_generations_ksp: 200 <br/>
+fill_rate_ksp: 1 <br/>
+random_seed: 49 <br/>
+exp_type: 13 <br/>
+dataset_idx: 1 <br/>
+
+3. For a280-n2790.txt <br/>
+
+population_size_nsg: 100 <br/>
+evaluations_tsp: 10000 <br/>
+run_local_tsp: True <br/>
+tournament_size_ksp: 5 <br/>
+num_generations_ksp: 200 <br/>
+fill_rate_ksp: 1 <br/>
+random_seed: 49 <br/>
+exp_type: 20 <br/>
+dataset_idx: 2 <br/>
+
+4. For fnl4461-n4460.txt <br/>
+
+population_size_nsg: 50 <br/>
+evaluations_tsp: 5000 <br/>
+run_local_tsp: True <br/>
+tournament_size_ksp: 5 <br/>
+num_generations_ksp: 200 <br/>
+fill_rate_ksp: 1 <br/>
+random_seed: 49 <br/>
+exp_type: 20 <br/>
+dataset_idx: 3 <br/>
+
+5. For fnl4461-n22300.txt <br/>
+
+population_size_nsg: 50 <br/>
+evaluations_tsp: 5000 <br/>
+run_local_tsp: True <br/>
+tournament_size_ksp: 5 <br/>
+num_generations_ksp: 200 <br/>
+fill_rate_ksp: 1 <br/>
+random_seed: 49 <br/>
+exp_type: 13 <br/>
+dataset_idx: 4 <br/>
+
+6. For fnl4461-n44600.txt <br/>
+
+population_size_nsg: 50 <br/>
+evaluations_tsp: 5000 <br/>
+run_local_tsp: True <br/>
+tournament_size_ksp: 5 <br/>
+num_generations_ksp: 200 <br/>
+fill_rate_ksp: 1 <br/>
+random_seed: 49 <br/>
+exp_type: 20 <br/>
+dataset_idx: 5 <br/>
+
+7. For pla33810-n33809.txt <br/>
+
+population_size_nsg: 20 <br/>
+evaluations_tsp: 1000 <br/>
+run_local_tsp: False <br/>
+tournament_size_ksp: 5 <br/>
+num_generations_ksp: 200 <br/>
+fill_rate_ksp: 1 <br/>
+random_seed: 49 <br/>
+exp_type: 20 <br/>
+dataset_idx: 6 <br/>
+
+8. For pla33810-n169045.txt <br/>
+
+population_size_nsg: 20 <br/>
+evaluations_tsp: 1000 <br/>
+run_local_tsp: False <br/>
+tournament_size_ksp: 5 <br/>
+num_generations_ksp: 200 <br/>
+fill_rate_ksp: 1 <br/>
+random_seed: 49 <br/>
+exp_type: 13 <br/>
+dataset_idx: 7 <br/>
+
+9. For pla33810-n338090.txt <br/>
+
+population_size_nsg: 20 <br/>
+evaluations_tsp: 1000 <br/>
+run_local_tsp: False <br/>
+tournament_size_ksp: 5 <br/>
+num_generations_ksp: 200 <br/>
+fill_rate_ksp: 1 <br/>
+random_seed: 49 <br/>
+exp_type: 20 <br/>
+dataset_idx: 8 <br/>
 
 <h3>How to plot: </h3>
 Please run "plot.ipynb" in folder "src"
@@ -55,4 +159,5 @@ dataset_idx (int): Which file reading <br/>
 10: ordered_crossover          + bitflip_mutation <br/> 
 11: cycle_crossover            + bitflip_mutation <br/> 
 12: displacement_crossover     + bitflip_mutation <br/> 
+13: ordered_crossover          + gaussian_mutation <br/> 
 other number: ordered_crossover + inversion_mutation (our best choice and result)<br/> 

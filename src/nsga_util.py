@@ -108,6 +108,9 @@ def make_new_pack_pop(population, profits, weights, tournament_size, knapsack_ca
         elif type_local == 12: 
             c, d = pack.displacement_crossover(a, b)
             e, f = pack.bitflip_mutation(c, d)
+        elif type_local == 13:
+            c, d = pack.ordered_crossover(a, b)
+            e, f = pack.gaussian_mutation(c, d)
         else:
             c, d = pack.ordered_crossover(a, b)
             e, f = pack.inversion_mutation(c, d)
