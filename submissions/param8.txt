@@ -1,9 +1,0 @@
-population_size_nsg: 10
-evaluations_tsp: 1000
-run_local_tsp: False
-tournament_size_ksp: 5
-num_generations_ksp: 100
-fill_rate_ksp: 1
-random_seed: 49
-exp_type: 0
-dataset_idx: 8
